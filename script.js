@@ -9,7 +9,7 @@ var gameWidth = window.innerWidth;
 var gameHeight = window.innerHeight;
 
 hole.addEventListener('animationiteration', () => {
-    var random = Math.floor(Math.random() * (gameHeight * 0.6)); // Ensure safe vertical range
+    var random = Math.floor(Math.random() * (gameHeight * 0.6)); // Generate safe random vertical hole position
     hole.style.top = random + "px";
     counter++;
 });
@@ -23,16 +23,16 @@ var gameLoop = setInterval(function(){
     var holeTop = parseInt(window.getComputedStyle(hole).getPropertyValue("top"));
     var characterBottom = characterTop + (3 * gameHeight / 100);
 
-    // Gravity effect
+    // Gravity effect increases character downward movement while not in the jump state
     if (jumping === 0) {
         character.style.top = (characterTop + gameHeight / 150) + "px";
     }
 
-    // Fix collision logic for accurate detection
-    var withinBlockRange = blockRight <= (20 + blockWidth) && blockRight >= 20; // Horizontal overlap
-    var outsideHoleRange = characterTop < holeTop || characterBottom > holeTop + gameHeight * 0.3; // Not in hole
+    // Fix collision detection logic for all columns consistently
+    var blockCollision = blockRight <= (20 + blockWidth) && blockRight >= 20; // Horizontal overlap
+    var outsideHoleRange = characterTop < holeTop || characterBottom > holeTop + gameHeight * 0.3; // Character not within hole
 
-    if ((characterTop > gameHeight * 0.97) || (withinBlockRange && outsideHoleRange)) {
+    if ((characterTop > gameHeight * 0.97) || (blockCollision && outsideHoleRange)) {
         gameOver();
     }
 }, 10);
@@ -69,25 +69,25 @@ function restartGame() {
     character.style.top = (gameHeight * 0.2) + "px";
     document.getElementById('scoreModal').style.display = 'none';
 
-    // Restart column animations
-    block.style.animation = ''; // Reset
+    // Restart column animations properly
+    block.style.animation = ''; // Reset animation styles to avoid lingering issues
     hole.style.animation = '';
-    void block.offsetWidth;      // Trigger reflow to restart
+    void block.offsetWidth;      // Trigger reflow to restart animations
     void hole.offsetWidth;       
-    block.style.animation = 'block 2s infinite linear'; // Fresh load
+    block.style.animation = 'block 2s infinite linear';
     hole.style.animation = 'block 2s infinite linear';
 }
 
 document.getElementById('restartButton').addEventListener('click', function(e) {
-    e.stopPropagation();  // Prevent event from bubbling
+    e.stopPropagation();  // Prevent event propagation to ensure proper restart
     restartGame();
 });
 
-// Shared click or touch listener for jump
+// Touch and click listeners to handle jumps
 ['click', 'touchstart'].forEach(evt => {
     document.addEventListener(evt, function(e) {
         if (gameActive && e.target.id !== 'restartButton') {
-            if (evt === 'touchstart') e.preventDefault();
+            if (evt === 'touchstart') e.preventDefault(); // Prevent touch gesture interferences
             jump();
         }
     });
