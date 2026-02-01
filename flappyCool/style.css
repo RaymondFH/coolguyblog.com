@@ -5,7 +5,6 @@
     font-weight: 400;
     font-style: normal;
 }
-
 body, html {
     margin: 0;
     padding: 0;
@@ -13,7 +12,6 @@ body, html {
     height: 100%;
     overflow: hidden;
 }
-
 #game {
     width: 100vw;
     height: 100vh;
@@ -23,29 +21,24 @@ body, html {
     position: relative;
     background-color: #87CEEB; /* Sky blue background */
 }
-
 #block, #hole {
     width: 10vw;
     position: absolute;
     right: -10vw;
     animation: block 2s infinite linear;
 }
-
 #block {
     height: 100vh;
     background-color: green; /* Make the blocks look like pipes */
 }
-
 #hole {
     height: 30vh;
     background-color: #87CEEB; /* Sky blue to match the background */
 }
-
 @keyframes block {
     0% { right: -10vw; }
     100% { right: 100vw; }
 }
-
 #character {
     width: 3vw;
     height: 3vw;
@@ -55,15 +48,24 @@ body, html {
     background-color: transparent;
     border-radius: 0;
 }
-
 #character img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
-
-/* score */
-
+/* score display */
+#score {
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3vw;
+    color: white;
+    text-shadow: 3px 3px 0px #000;
+    z-index: 100;
+    pointer-events: none;
+}
+/* score modal */
 .modal {
     display: none;
     position: fixed;
@@ -74,7 +76,6 @@ body, html {
     height: 100%;
     background-color: rgba(0,0,0,0.5);
 }
-
 .modal-content {
     background-color: #f4f4f4;
     margin: 20% auto;
@@ -85,17 +86,14 @@ body, html {
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-
 .modal h2 {
     color: #333;
     margin-bottom: 10px;
 }
-
 .modal p {
     color: #666;
     margin-bottom: 20px;
 }
-
 #restartButton {
     background-color: #4CAF50;
     color: white;
@@ -106,14 +104,11 @@ body, html {
     font-size: 16px;
     transition: background-color 0.3s;
 }
-
 #restartButton:hover {
     background-color: #45a049;
 }
-
 .press-start-2p-regular {
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
-  }
-  
+}
