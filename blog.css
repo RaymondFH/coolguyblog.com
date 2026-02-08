@@ -192,6 +192,5 @@ audio {
 .embedded-doc h4,
 .embedded-doc h5,
 .embedded-doc h6 {
-    padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
