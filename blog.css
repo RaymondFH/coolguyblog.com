@@ -185,3 +185,13 @@ audio {
   width: 60%;
   max-width: 200px;
 }
+
+.embedded-doc h1,
+.embedded-doc h2,
+.embedded-doc h3,
+.embedded-doc h4,
+.embedded-doc h5,
+.embedded-doc h6 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
