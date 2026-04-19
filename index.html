@@ -504,7 +504,7 @@ nav.links a:hover { color: var(--accent2); }
   <div class="now-block">
     <div class="now-row">
       <span class="now-key">status</span>
-      <span class="now-val live"><span class="blink"></span>WELCOME TO CGB 2.0. Series 66 passed. Financial Advisor.</span>
+      <span class="now-val live"><span class="blink"></span>series 66 passed. financial advisor, saxony securities.</span>
     </div>
     <div class="now-row">
       <span class="now-key">playing</span>
@@ -519,11 +519,11 @@ nav.links a:hover { color: var(--accent2); }
     </div>
     <div class="now-row">
       <span class="now-key">thinking</span>
-      <span class="now-val dim">optical interconnects. the sovereign moat. what comes next.</span>
+      <span class="now-val dim">optical interconnects. the sovereign moat. what comes after the exam.</span>
     </div>
     <div class="now-row">
       <span class="now-key">reading</span>
-      <span class="now-val dim">Blood Meridian - Cormac McCarthy, That Hideous Strength - C.S. Lewis</span>
+      <span class="now-val dim">—</span>
     </div>
     <div class="now-row">
       <span class="now-key">mn</span>
@@ -562,6 +562,14 @@ nav.links a:hover { color: var(--accent2); }
   </div>
   <div class="tickers-note">delayed data via yahoo finance. not financial advice.</div>
 
+  <!-- TRANSMISSION -->
+  <div class="section-label">transmission</div>
+  <div class="posts-section" id="posts-container">
+    <div class="posts-loading">loading transmissions...</div>
+  </div>
+
+  <hr class="rule">
+
   <!-- THESIS -->
   <div class="section-label">frameworks</div>
   <div class="thesis-section">
@@ -585,14 +593,6 @@ nav.links a:hover { color: var(--accent2); }
       <a class="thesis-title" href="https://www.marketnihilist.com/p/the-system-is-the-substance" target="_blank">The System Is The Substance ↗</a>
       <div class="thesis-desc">Most investors analyze markets. This is an argument that the market is the analysis — that financial infrastructure, incentive structure, and information flow have become the substance of economic reality itself. The foundational frame for everything else on this publication.</div>
     </div>
-  </div>
-
-  <hr class="rule">
-
-  <!-- TRANSMISSION -->
-  <div class="section-label">transmission</div>
-  <div class="posts-section" id="posts-container">
-    <div class="posts-loading">loading transmissions...</div>
   </div>
 
   <hr class="rule">
@@ -806,8 +806,11 @@ async function fetchTickers() {
 
   for (let i = 0; i < symbols.length; i++) {
     try {
-      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbols[i]}?interval=1d&range=1d`);
-      const data = await res.json();
+      const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${symbols[i]}?interval=1d&range=2d`;
+      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}`;
+      const res = await fetch(proxyUrl);
+      const outer = await res.json();
+      const data = JSON.parse(outer.contents);
       const meta = data.chart.result[0].meta;
       const price = meta.regularMarketPrice;
       const prev = meta.chartPreviousClose || meta.previousClose;
