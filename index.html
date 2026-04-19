@@ -21,6 +21,7 @@
   --gold:    #C9963A;
   --green:   #5A9E7A;
   --blue:    #6B9EC4;
+  --red:     #C45A5A;
   --rule:    #2E2820;
   --mono:    'DM Mono', monospace;
   --serif:   'DM Serif Display', serif;
@@ -108,6 +109,7 @@ nav.links a:hover { color: var(--accent2); }
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: default;
 }
 .section-label::after {
   content: '';
@@ -115,6 +117,16 @@ nav.links a:hover { color: var(--accent2); }
   height: 1px;
   background: var(--rule);
 }
+.section-label.collapsible { cursor: pointer; user-select: none; }
+.section-label.collapsible:hover { color: var(--accent2); }
+.section-toggle {
+  font-size: 0.55rem;
+  color: var(--muted);
+  transition: transform 0.2s;
+  display: inline-block;
+  margin-left: 0.25rem;
+}
+.section-label.collapsed .section-toggle { transform: rotate(-90deg); }
 
 /* NOW BLOCK */
 .now-block {
@@ -122,11 +134,10 @@ nav.links a:hover { color: var(--accent2); }
   color: var(--ink2);
   padding: 0.9rem 1rem;
   margin-bottom: 1.75rem;
+  border: 1px solid var(--rule);
   border-left: 3px solid var(--accent);
   font-family: var(--mono);
   font-size: 0.76rem;
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
 }
 .now-row {
   display: flex;
@@ -163,17 +174,98 @@ nav.links a:hover { color: var(--accent2); }
 .audio-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .audio-row audio { height: 22px; width: 140px; }
 
-/* ABOUT */
-.about-block {
+/* BIO */
+.bio-block {
   font-family: var(--mono);
   font-size: 0.83rem;
   color: var(--ink2);
   margin-bottom: 1.75rem;
   line-height: 1.8;
+  border-left: 2px solid var(--rule);
+  padding-left: 1rem;
 }
-.about-block a { color: var(--blue); text-decoration: none; }
-.about-block a:hover { color: var(--accent2); }
-.about-block s { opacity: 0.3; }
+.bio-block strong { color: var(--ink); font-weight: 500; }
+.bio-block a { color: var(--blue); text-decoration: none; }
+.bio-block a:hover { color: var(--accent2); }
+
+/* TICKERS */
+.tickers-row {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+.ticker-card {
+  background: var(--bg3);
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.7rem;
+  min-width: 80px;
+  flex: 1;
+}
+.ticker-symbol {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+.ticker-price {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+.ticker-change {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  margin-top: 0.1rem;
+}
+.ticker-change.up { color: var(--green); }
+.ticker-change.down { color: var(--red); }
+.ticker-change.flat { color: var(--muted); }
+.tickers-note {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+  margin-top: -1.2rem;
+  font-style: italic;
+}
+
+/* THESIS */
+.thesis-section { margin-bottom: 1.75rem; }
+.thesis-item {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.65rem 0;
+}
+.thesis-item:last-child { border-bottom: none; }
+.thesis-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.2rem;
+  transition: color 0.15s;
+}
+.thesis-title:hover { color: var(--accent2); }
+.thesis-desc {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.thesis-tag {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
 
 /* POSTS */
 .posts-section { margin-bottom: 1.75rem; }
@@ -237,10 +329,13 @@ nav.links a:hover { color: var(--accent2); }
 
 /* CATALOG */
 .catalog-section { margin-bottom: 1.75rem; }
+.catalog-body { overflow: hidden; transition: max-height 0.35s ease; }
+.catalog-body.collapsed { max-height: 0 !important; }
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 0.45rem;
+  padding-top: 0.1rem;
 }
 .album-card {
   border: 1px solid var(--rule);
@@ -274,7 +369,7 @@ nav.links a:hover { color: var(--accent2); }
 }
 .album-year { font-family: var(--mono); font-size: 0.48rem; color: var(--muted); margin-top: 1px; }
 
-/* ALBUM MODAL */
+/* MODAL */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -295,43 +390,13 @@ nav.links a:hover { color: var(--accent2); }
   max-height: 90vh;
   overflow-y: auto;
 }
-.modal-art {
-  width: 100%;
-  aspect-ratio: 1;
-  background: var(--bg3);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
+.modal-art { width: 100%; aspect-ratio: 1; background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .modal-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .modal-body { padding: 1.1rem 1.25rem; }
-.modal-title {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  font-style: italic;
-  color: var(--ink);
-  margin-bottom: 0.15rem;
-}
-.modal-artist {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--accent2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.75rem;
-}
-.modal-year {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  color: var(--muted);
-  margin-bottom: 0.75rem;
-}
-.modal-desc {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--ink2);
-  line-height: 1.7;
-  margin-bottom: 1rem;
-}
+.modal-title { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--ink); margin-bottom: 0.15rem; }
+.modal-artist { font-family: var(--mono); font-size: 0.65rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.modal-year { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); margin-bottom: 0.75rem; }
+.modal-desc { font-family: var(--mono); font-size: 0.78rem; color: var(--ink2); line-height: 1.7; margin-bottom: 1rem; }
 .modal-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .modal-btn {
   font-family: var(--mono);
@@ -383,13 +448,14 @@ nav.links a:hover { color: var(--accent2); }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--accent2); }
 
-/* FADE IN */
 .page > * { animation: fadein 0.4s ease both; }
-.site-header    { animation-delay: 0s; }
-.now-block      { animation-delay: 0.07s; }
-.about-block    { animation-delay: 0.12s; }
-.posts-section  { animation-delay: 0.16s; }
-.catalog-section{ animation-delay: 0.2s; }
+.site-header     { animation-delay: 0s; }
+.now-block       { animation-delay: 0.06s; }
+.bio-block       { animation-delay: 0.1s; }
+.tickers-row     { animation-delay: 0.13s; }
+.thesis-section  { animation-delay: 0.16s; }
+.posts-section   { animation-delay: 0.19s; }
+.catalog-section { animation-delay: 0.22s; }
 @keyframes fadein { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } }
 </style>
 </head>
@@ -433,6 +499,7 @@ nav.links a:hover { color: var(--accent2); }
 
   <hr class="rule heavy">
 
+  <!-- NOW -->
   <div class="section-label">now</div>
   <div class="now-block">
     <div class="now-row">
@@ -459,18 +526,70 @@ nav.links a:hover { color: var(--accent2); }
       <span class="now-val dim">—</span>
     </div>
     <div class="now-row">
-      <span class="now-key">latest mn</span>
-      <span class="now-val" id="mn-latest-row"><a href="https://marketnihilist.com" target="_blank">marketnihilist.com ↗</a></span>
+      <span class="now-key">mn</span>
+      <span class="now-val" id="mn-latest-row">
+        <a href="https://marketnihilist.com" target="_blank">marketnihilist.com ↗</a>
+        <span id="mn-post-count" style="color:var(--muted);margin-left:0.75rem;font-size:0.65rem;"></span>
+      </span>
     </div>
   </div>
 
-  <div class="about-block">
-    autodidactic psychopomp. formerly: musician, marketing consultant, pr writer, web developer. current financial mystic, and secret author of <a href="https://marketnihilist.com">Market Nihilist</a>.<br><br>
-    a cool guy learning cool things. currently thinking about <s>programming</s>, macroeconomics, quantum computing, AI, robotics, philosophy, history, and theology.
+  <!-- BIO -->
+  <div class="section-label">about</div>
+  <div class="bio-block">
+    <p><strong>Raymond Felix II</strong> is a musician, developer, and financial writer based in Cleveland, Ohio.</p>
+    <br>
+    <p>He studied music production at Berklee College of Music and has released twelve albums across multiple projects and aliases. In 2024 he completed a tribute album funded by a City of Cleveland grant. It has not been released.</p>
+    <br>
+    <p>He taught himself to code and has built and shipped software tools across Python and JavaScript, with a focus on AI integration.</p>
+    <br>
+    <p>He holds a Series 7 and Series 66 and works as a financial advisor. He is the author of <a href="https://marketnihilist.com" target="_blank">Market Nihilist</a>, a Substack publication covering macroeconomics, emerging technology, and financial infrastructure for investors who know markets changed and most market thinking didn't.</p>
+    <br>
+    <p>He is 30 years old.</p>
   </div>
 
   <hr class="rule">
 
+  <!-- TICKERS -->
+  <div class="section-label">market</div>
+  <div class="tickers-row" id="tickers-row">
+    <div class="ticker-card" id="tick-BTC"><div class="ticker-symbol">BTC</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
+    <div class="ticker-card" id="tick-INTC"><div class="ticker-symbol">INTC</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
+    <div class="ticker-card" id="tick-SMH"><div class="ticker-symbol">SMH</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
+    <div class="ticker-card" id="tick-IONQ"><div class="ticker-symbol">IONQ</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
+    <div class="ticker-card" id="tick-GOOGL"><div class="ticker-symbol">GOOGL</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
+    <div class="ticker-card" id="tick-MRVL"><div class="ticker-symbol">MRVL</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
+  </div>
+  <div class="tickers-note">delayed data via yahoo finance. not financial advice.</div>
+
+  <!-- THESIS -->
+  <div class="section-label">frameworks</div>
+  <div class="thesis-section">
+    <div class="thesis-item">
+      <span class="thesis-tag">epistemology</span>
+      <a class="thesis-title" href="https://www.marketnihilist.com/p/the-epistemic-horizon-problem" target="_blank">The Epistemic Horizon Problem ↗</a>
+      <div class="thesis-desc">There is a hard limit on what any investor can actually know, and that limit is getting closer. As complexity compounds — AI, quantum, geopolitics, synthetic instruments — the gap between what moves markets and what participants can model grows structurally wider. The question isn't what you know. It's what you can't.</div>
+    </div>
+    <div class="thesis-item">
+      <span class="thesis-tag">AI / portfolio</span>
+      <a class="thesis-title" href="https://www.marketnihilist.com/p/the-only-honest-ai-portfolio" target="_blank">The Only Honest AI Portfolio ↗</a>
+      <div class="thesis-desc">Three branches, one hedge. A framework for positioning across AI outcomes without pretending to know which scenario wins. Branch A: incumbents dominate. Branch B: new infrastructure layer emerges. Branch C: distributed disruption. Bitcoin sits outside all three as the branch-agnostic bet.</div>
+    </div>
+    <div class="thesis-item">
+      <span class="thesis-tag">macro / structure</span>
+      <a class="thesis-title" href="https://www.marketnihilist.com/p/the-great-convergence-how-crypto" target="_blank">The Great Convergence ↗</a>
+      <div class="thesis-desc">Crypto and traditional markets are no longer separate systems. Institutional capital, continuous trading, and macro sensitivity have merged them into one risk market with different expressions. The old rules were built for a world that no longer exists. The investor who adapts to a faster, more reflexive, more psychological market has a structural edge.</div>
+    </div>
+    <div class="thesis-item">
+      <span class="thesis-tag">foundation</span>
+      <a class="thesis-title" href="https://www.marketnihilist.com/p/the-system-is-the-substance" target="_blank">The System Is The Substance ↗</a>
+      <div class="thesis-desc">Most investors analyze markets. This is an argument that the market is the analysis — that financial infrastructure, incentive structure, and information flow have become the substance of economic reality itself. The foundational frame for everything else on this publication.</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- TRANSMISSION -->
   <div class="section-label">transmission</div>
   <div class="posts-section" id="posts-container">
     <div class="posts-loading">loading transmissions...</div>
@@ -478,9 +597,14 @@ nav.links a:hover { color: var(--accent2); }
 
   <hr class="rule">
 
-  <div class="section-label">the catalog</div>
+  <!-- CATALOG -->
+  <div class="section-label collapsible" id="catalog-toggle" onclick="toggleCatalog()">
+    the catalog <span class="section-toggle">▾</span>
+  </div>
   <div class="catalog-section">
-    <div class="catalog-grid" id="catalog-grid"></div>
+    <div class="catalog-body" id="catalog-body">
+      <div class="catalog-grid" id="catalog-grid"></div>
+    </div>
   </div>
 
   <footer class="site-footer">
@@ -497,46 +621,65 @@ nav.links a:hover { color: var(--accent2); }
 <script>
 feather.replace();
 
+// ─── CATALOG COLLAPSE ────────────────────────────────────
+function toggleCatalog() {
+  const body = document.getElementById('catalog-body');
+  const label = document.getElementById('catalog-toggle');
+  const isCollapsed = body.classList.contains('collapsed');
+  if (isCollapsed) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.classList.remove('collapsed');
+    label.classList.remove('collapsed');
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      body.classList.add('collapsed');
+      label.classList.add('collapsed');
+    });
+  }
+}
+
+// set initial max-height after grid renders
+window.addEventListener('load', () => {
+  const body = document.getElementById('catalog-body');
+  body.style.maxHeight = body.scrollHeight + 'px';
+});
+
 // ─── MODAL ───────────────────────────────────────────────
 function closeModal(e) {
-  if (e.target === document.getElementById('album-modal')) {
+  if (e.target === document.getElementById('album-modal'))
     document.getElementById('album-modal').classList.remove('open');
-  }
 }
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('album-modal').classList.remove('open');
 });
 
-function openAlbum(album) {
-  document.getElementById('modal-art').innerHTML = album.art
-    ? `<img src="${album.art}" alt="${album.title}">`
+function openAlbum(a) {
+  document.getElementById('modal-art').innerHTML = a.art
+    ? `<img src="${a.art}" alt="${a.title}">`
     : `<svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="0.8" style="width:60px;height:60px;opacity:0.3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`;
-
-  const parts = album.title.split(' - ');
-  document.getElementById('modal-title').textContent = parts[0] || album.title;
-  document.getElementById('modal-artist').textContent = parts[1] || '';
-  document.getElementById('modal-year').textContent = album.year;
-  document.getElementById('modal-desc').textContent = album.desc || '';
-
+  document.getElementById('modal-title').textContent = a.title;
+  document.getElementById('modal-artist').textContent = a.artist;
+  document.getElementById('modal-year').textContent = a.year;
+  document.getElementById('modal-desc').textContent = a.desc || '';
   const actions = document.getElementById('modal-actions');
   actions.innerHTML = '';
-  if (album.stream) {
-    const a = document.createElement('a');
-    a.href = album.stream; a.target = '_blank';
-    a.className = 'modal-btn primary'; a.textContent = 'stream ↗';
-    actions.appendChild(a);
+  if (a.stream) {
+    const lnk = document.createElement('a');
+    lnk.href = a.stream; lnk.target = '_blank';
+    lnk.className = 'modal-btn primary'; lnk.textContent = 'stream ↗';
+    actions.appendChild(lnk);
   }
-  if (album.download) {
-    const a = document.createElement('a');
-    a.href = album.download; a.download = '';
-    a.className = 'modal-btn'; a.textContent = 'download';
-    actions.appendChild(a);
+  if (a.download) {
+    const lnk = document.createElement('a');
+    lnk.href = a.download; lnk.download = '';
+    lnk.className = 'modal-btn'; lnk.textContent = 'download';
+    actions.appendChild(lnk);
   }
-
   document.getElementById('album-modal').classList.add('open');
 }
 
-// ─── SIGIL — astronomical compass rose ───────────────────
+// ─── SIGIL ───────────────────────────────────────────────
 const canvas = document.getElementById('sigil-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -548,10 +691,7 @@ function resizeCanvas() {
 
 function seededRandom(seed) {
   let s = seed;
-  return function() {
-    s = (s * 16807) % 2147483647;
-    return (s - 1) / 2147483646;
-  };
+  return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
 }
 
 function drawSigil() {
@@ -561,68 +701,57 @@ function drawSigil() {
   const rand = seededRandom(seed);
   ctx.clearRect(0, 0, W, H);
   ctx.strokeStyle = '#C4622D';
+  ctx.fillStyle = '#C4622D';
 
-  // outer rings
+  // concentric rings
   [240, 200, 160, 80, 40].forEach((r, i) => {
     ctx.lineWidth = i === 0 ? 1 : 0.5;
-    ctx.globalAlpha = i === 0 ? 1 : 0.6;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.stroke();
+    ctx.globalAlpha = i === 0 ? 1 : 0.5;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
   });
   ctx.globalAlpha = 1;
 
-  // 8-point compass rose — cardinal + intercardinal
+  // 8-point compass
   const cardinalAngles = Array.from({length: 8}, (_, i) => (i / 8) * Math.PI * 2 - Math.PI / 2);
   cardinalAngles.forEach((a, i) => {
     const isCardinal = i % 2 === 0;
     ctx.lineWidth = isCardinal ? 0.8 : 0.5;
-    ctx.globalAlpha = isCardinal ? 1 : 0.7;
+    ctx.globalAlpha = isCardinal ? 1 : 0.6;
     ctx.beginPath();
     ctx.moveTo(cx + Math.cos(a) * 40, cy + Math.sin(a) * 40);
     ctx.lineTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240);
     ctx.stroke();
-    // arrowhead on cardinal points
     if (isCardinal) {
-      const tip = { x: cx + Math.cos(a) * 250, y: cy + Math.sin(a) * 250 };
-      const left = { x: cx + Math.cos(a + 0.15) * 230, y: cy + Math.sin(a + 0.15) * 230 };
-      const right = { x: cx + Math.cos(a - 0.15) * 230, y: cy + Math.sin(a - 0.15) * 230 };
+      const tip   = { x: cx + Math.cos(a) * 252, y: cy + Math.sin(a) * 252 };
+      const left  = { x: cx + Math.cos(a + 0.14) * 232, y: cy + Math.sin(a + 0.14) * 232 };
+      const right = { x: cx + Math.cos(a - 0.14) * 232, y: cy + Math.sin(a - 0.14) * 232 };
       ctx.beginPath();
-      ctx.moveTo(tip.x, tip.y);
-      ctx.lineTo(left.x, left.y);
-      ctx.lineTo(right.x, right.y);
-      ctx.closePath();
-      ctx.globalAlpha = 0.7;
-      ctx.fill();
+      ctx.moveTo(tip.x, tip.y); ctx.lineTo(left.x, left.y); ctx.lineTo(right.x, right.y);
+      ctx.closePath(); ctx.globalAlpha = 0.6; ctx.fill();
     }
   });
   ctx.globalAlpha = 1;
 
-  // degree tick marks — every 10 degrees, longer every 30
+  // degree ticks
   ctx.lineWidth = 0.5;
   for (let deg = 0; deg < 360; deg += 10) {
     const a = (deg / 360) * Math.PI * 2 - Math.PI / 2;
     const isThirty = deg % 30 === 0;
-    const r1 = 240;
-    const r2 = isThirty ? 226 : 233;
-    ctx.globalAlpha = isThirty ? 0.9 : 0.5;
+    ctx.globalAlpha = isThirty ? 0.8 : 0.4;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
-    ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
+    ctx.moveTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240);
+    ctx.lineTo(cx + Math.cos(a) * (isThirty ? 225 : 233), cy + Math.sin(a) * (isThirty ? 225 : 233));
     ctx.stroke();
   }
   ctx.globalAlpha = 1;
 
-  // inner seeded constellation — unique per day, no pentagrams
-  // use only even-spaced points to avoid 5-fold symmetry
-  const nPts = 6 + (Math.floor(rand() * 3)) * 2; // always even: 6,8,10
+  // seeded constellation — even point count only, no pentagrams
+  const nPts = 6 + Math.floor(rand() * 3) * 2;
   const starAngles = Array.from({length: nPts}, (_, i) =>
     (i / nPts) * Math.PI * 2 + rand() * (Math.PI / nPts) * 0.5
   );
-  const starR = 120 + rand() * 30;
-  ctx.lineWidth = 0.4;
-  ctx.globalAlpha = 0.6;
-  // connect to every other point (skip-1), never skip-2 which makes pentagrams
+  const starR = 115 + rand() * 35;
+  ctx.lineWidth = 0.4; ctx.globalAlpha = 0.5;
   for (let i = 0; i < starAngles.length; i++) {
     const j = (i + 2) % starAngles.length;
     ctx.beginPath();
@@ -630,73 +759,85 @@ function drawSigil() {
     ctx.lineTo(cx + Math.cos(starAngles[j]) * starR, cy + Math.sin(starAngles[j]) * starR);
     ctx.stroke();
   }
-  ctx.globalAlpha = 1;
-
-  // small dots at star points
   starAngles.forEach(a => {
     ctx.beginPath();
     ctx.arc(cx + Math.cos(a) * starR, cy + Math.sin(a) * starR, 1.5, 0, Math.PI * 2);
-    ctx.fillStyle = '#C4622D';
-    ctx.globalAlpha = 0.8;
-    ctx.fill();
+    ctx.globalAlpha = 0.7; ctx.fill();
   });
   ctx.globalAlpha = 1;
 
-  // center crosshair
+  // center
   ctx.lineWidth = 0.8;
-  ctx.strokeStyle = '#C4622D';
-  [-16, 16].forEach(d => {
+  [-14, 14].forEach(d => {
     ctx.beginPath();
-    ctx.moveTo(cx + d * 0.6, cy); ctx.lineTo(cx + d, cy);
-    ctx.moveTo(cx, cy + d * 0.6); ctx.lineTo(cx, cy + d);
+    ctx.moveTo(cx + d * 0.5, cy); ctx.lineTo(cx + d, cy);
+    ctx.moveTo(cx, cy + d * 0.5); ctx.lineTo(cx, cy + d);
     ctx.stroke();
   });
-  ctx.beginPath();
-  ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-  ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI * 2); ctx.stroke();
 }
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// ─── MN RSS ──────────────────────────────────────────────
+// ─── MN RSS + POST COUNT ─────────────────────────────────
 async function fetchMNLatest() {
   try {
-    const res = await fetch(
-      'https://api.rss2json.com/v1/api.json?rss_url=https://marketnihilist.substack.com/feed'
-    );
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://marketnihilist.substack.com/feed&api_key=&count=50');
     const data = await res.json();
     if (data.items && data.items.length > 0) {
       const latest = data.items[0];
-      const el = document.getElementById('mn-latest-row');
-      if (el) {
-        el.innerHTML = `<a href="${latest.link}" target="_blank">${latest.title} ↗</a>`;
+      const row = document.getElementById('mn-latest-row');
+      if (row) {
+        row.querySelector('a').href = latest.link;
+        row.querySelector('a').textContent = latest.title + ' ↗';
       }
+      const countEl = document.getElementById('mn-post-count');
+      if (countEl) countEl.textContent = `${data.items.length} pieces`;
     }
-  } catch(e) {
-    // silently fail — fallback link stays in place
-  }
+  } catch(e) {}
 }
 fetchMNLatest();
 
-// ─── MARKDOWN POSTS ──────────────────────────────────────
-// posts live in /posts/ as .md files
-// post list is defined in /posts/index.json — array of {file, title, date}
-// format: [{ "file": "my-post.md", "title": "My Post", "date": "4/20/26" }, ...]
-// to add a post: create the .md file, add entry to index.json, push. done.
+// ─── TICKERS ─────────────────────────────────────────────
+async function fetchTickers() {
+  const symbols = ['BTC-USD', 'INTC', 'SMH', 'IONQ', 'GOOGL', 'MRVL'];
+  const displayIds = ['BTC', 'INTC', 'SMH', 'IONQ', 'GOOGL', 'MRVL'];
 
+  for (let i = 0; i < symbols.length; i++) {
+    try {
+      const res = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${symbols[i]}?interval=1d&range=1d`);
+      const data = await res.json();
+      const meta = data.chart.result[0].meta;
+      const price = meta.regularMarketPrice;
+      const prev = meta.chartPreviousClose || meta.previousClose;
+      const change = ((price - prev) / prev) * 100;
+      const card = document.getElementById(`tick-${displayIds[i]}`);
+      if (card) {
+        card.querySelector('.ticker-price').textContent =
+          symbols[i] === 'BTC-USD'
+            ? '$' + price.toLocaleString('en-US', {maximumFractionDigits: 0})
+            : '$' + price.toFixed(2);
+        const changeEl = card.querySelector('.ticker-change');
+        changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
+        changeEl.className = 'ticker-change ' + (change > 0.05 ? 'up' : change < -0.05 ? 'down' : 'flat');
+      }
+    } catch(e) {}
+  }
+}
+fetchTickers();
+
+// ─── MARKDOWN POSTS ──────────────────────────────────────
 async function loadPosts() {
   const container = document.getElementById('posts-container');
   try {
     const indexRes = await fetch('/posts/index.json');
     if (!indexRes.ok) throw new Error('no index');
     const posts = await indexRes.json();
-
     if (!posts.length) {
       container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>';
       return;
     }
-
     container.innerHTML = '';
     posts.forEach(post => {
       const item = document.createElement('div');
@@ -712,7 +853,6 @@ async function loadPosts() {
       container.appendChild(item);
     });
   } catch(e) {
-    // fallback — show placeholder if no posts yet
     container.innerHTML = `
       <div class="post-item">
         <div class="post-title-row" onclick="togglePost(this)">
@@ -729,8 +869,6 @@ async function togglePost(row) {
   const body = item.querySelector('.post-body');
   const wasOpen = item.classList.contains('open');
   item.classList.toggle('open');
-
-  // lazy load markdown on first open
   if (!wasOpen && body.dataset.src && !body.dataset.loaded) {
     try {
       const res = await fetch(body.dataset.src);
@@ -743,7 +881,6 @@ async function togglePost(row) {
   }
 }
 
-// minimal markdown renderer — handles the basics
 function renderMarkdown(md) {
   return md
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
@@ -762,23 +899,19 @@ function renderMarkdown(md) {
 loadPosts();
 
 // ─── CATALOG ─────────────────────────────────────────────
-// art path: 'resources/album-art/filename.jpg'
-// stream: link to spotify/apple/etc
-// download: direct file path if hosting the file
-// desc: one or two lines shown in modal
 const albums = [
-  { title: 'Exit 33',         artist: 'SLUMP',          year: '2016', art: 'resources/album-art/exit33.jpg',           stream: null, download: null, desc: '' },
-  { title: 'summersover',     artist: 'SLUMP',          year: '2017', art: 'resources/album-art/summersover.jpg',      stream: null, download: null, desc: '' },
-  { title: '93ultra',         artist: 'Raymond Felix',  year: '2017', art: 'resources/album-art/93ultra.jpg',          stream: null, download: null, desc: '' },
-  { title: 'SPEED DEMON',     artist: 'Raymond Felix',  year: '2018', art: 'resources/album-art/SPEED DEMON.jpg',      stream: null, download: null, desc: '' },
-  { title: 'TBTFL',           artist: 'Raymond Felix',  year: '2019', art: 'resources/album-art/TBTFL.jpg',            stream: null, download: null, desc: '' },
-  { title: 'Speed Hype I',    artist: 'Speed Hype',     year: '2019', art: 'resources/album-art/SH1.jpeg',             stream: null, download: null, desc: '' },
-  { title: 'Speed Hype II',   artist: 'Speed Hype',     year: '2020', art: 'resources/album-art/SH2.jpeg',             stream: null, download: null, desc: '' },
-  { title: 'Speed Hype III',  artist: 'Speed Hype',     year: '2020', art: 'resources/album-art/SH3.jpeg',             stream: null, download: null, desc: '' },
-  { title: 'Pay Attention',   artist: 'Speed Hype',     year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg',   stream: null, download: null, desc: '' },
-  { title: 'LYEATD',          artist: 'tenawai',        year: '2021', art: 'resources/album-art/LYEATD.jpeg',          stream: null, download: null, desc: '' },
-  { title: 'ART IS A SIN',    artist: 'Raymond Felix',  year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg',    stream: null, download: null, desc: '' },
-  { title: 'I Am The Ship',   artist: 'Raymond Felix',  year: '2023', art: 'resources/album-art/I Am The Ship.png',    stream: null, download: null, desc: '' },
+  { title: 'Exit 33',        artist: 'SLUMP',         year: '2016', art: 'resources/album-art/exit33.jpg',          stream: null, download: null, desc: '' },
+  { title: 'summersover',    artist: 'SLUMP',         year: '2017', art: 'resources/album-art/summersover.jpg',     stream: null, download: null, desc: '' },
+  { title: '93ultra',        artist: 'Raymond Felix', year: '2017', art: 'resources/album-art/93ultra.jpg',         stream: null, download: null, desc: '' },
+  { title: 'SPEED DEMON',    artist: 'Raymond Felix', year: '2018', art: 'resources/album-art/SPEED DEMON.jpg',     stream: null, download: null, desc: '' },
+  { title: 'TBTFL',          artist: 'Raymond Felix', year: '2019', art: 'resources/album-art/TBTFL.jpg',           stream: null, download: null, desc: '' },
+  { title: 'Speed Hype I',   artist: 'Speed Hype',    year: '2019', art: 'resources/album-art/SH1.jpeg',            stream: null, download: null, desc: '' },
+  { title: 'Speed Hype II',  artist: 'Speed Hype',    year: '2020', art: 'resources/album-art/SH2.jpeg',            stream: null, download: null, desc: '' },
+  { title: 'Speed Hype III', artist: 'Speed Hype',    year: '2020', art: 'resources/album-art/SH3.jpeg',            stream: null, download: null, desc: '' },
+  { title: 'Pay Attention',  artist: 'Speed Hype',    year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg',  stream: null, download: null, desc: '' },
+  { title: 'LYEATD',         artist: 'tenawai',       year: '2021', art: 'resources/album-art/LYEATD.jpeg',         stream: null, download: null, desc: '' },
+  { title: 'ART IS A SIN',   artist: 'Raymond Felix', year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg',   stream: null, download: null, desc: '' },
+  { title: 'I Am The Ship',  artist: 'Raymond Felix', year: '2023', art: 'resources/album-art/I Am The Ship.png',   stream: null, download: null, desc: '' },
 ];
 
 const grid = document.getElementById('catalog-grid');
@@ -790,12 +923,7 @@ albums.forEach(a => {
     <div class="album-art">
       ${a.art
         ? `<img src="${a.art}" alt="${a.title}">`
-        : `<div class="album-art-placeholder">
-             <svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="1.5">
-               <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
-             </svg>
-           </div>`
-      }
+        : `<div class="album-art-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>`}
     </div>
     <div class="album-info">
       <div class="album-title">${a.title}</div>
