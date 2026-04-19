@@ -9,21 +9,24 @@
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <style>
 :root {
-  --bg:     #F2EDE4;
-  --bg2:    #E8E0D4;
-  --bg3:    #1A1410;
-  --ink:    #1A1410;
-  --ink2:   #3D3530;
-  --muted:  #7A6F65;
-  --accent: #8B3A2A;
-  --accent2:#C4622D;
-  --green:  #2D6A4F;
-  --blue:   #2C5F8A;
-  --rule:   #C8BFB4;
-  --mono:   'DM Mono', monospace;
-  --serif:  'DM Serif Display', serif;
+  --bg:      #16120E;
+  --bg2:     #1E1915;
+  --bg3:     #0E0B08;
+  --surface: #241F1A;
+  --ink:     #EDE8E0;
+  --ink2:    #C4BDB4;
+  --muted:   #7A6F65;
+  --accent:  #C4622D;
+  --accent2: #E8896A;
+  --gold:    #C9963A;
+  --green:   #5A9E7A;
+  --blue:    #6B9EC4;
+  --rule:    #2E2820;
+  --mono:    'DM Mono', monospace;
+  --serif:   'DM Serif Display', serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   font-family: var(--mono);
   background: var(--bg);
@@ -32,13 +35,13 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
 }
-::selection { background: rgba(139,58,42,0.18); }
+::selection { background: rgba(196,98,45,0.3); }
 
 #sigil-canvas {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  opacity: 0.06;
+  opacity: 0.18;
   pointer-events: none;
   z-index: 0;
 }
@@ -51,6 +54,7 @@ body {
   padding: 2rem 1.25rem 6rem;
 }
 
+/* HEADER */
 .site-header { margin-bottom: 1.75rem; }
 .site-title a {
   font-family: var(--serif);
@@ -60,7 +64,7 @@ body {
   text-decoration: none;
   font-style: italic;
 }
-.site-title a:hover { color: var(--accent); }
+.site-title a:hover { color: var(--accent2); }
 .site-desc {
   display: flex;
   justify-content: space-between;
@@ -78,7 +82,7 @@ body {
 }
 .social-icons { display: flex; align-items: center; gap: 10px; }
 .social-icons a { color: var(--muted); transition: color 0.15s; }
-.social-icons a:hover { color: var(--accent); }
+.social-icons a:hover { color: var(--accent2); }
 .social-icons svg { width: 13px; height: 13px; vertical-align: middle; }
 nav.links { margin-top: 0.5rem; }
 nav.links a {
@@ -89,10 +93,10 @@ nav.links a {
   font-family: var(--mono);
   transition: color 0.15s;
 }
-nav.links a:hover { color: var(--accent); }
+nav.links a:hover { color: var(--accent2); }
 
 .rule { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
-.rule.heavy { border-top: 2px solid var(--ink2); margin: 1.5rem 0; }
+.rule.heavy { border-top: 1px solid var(--muted); margin: 1.5rem 0; opacity: 0.4; }
 
 .section-label {
   font-family: var(--mono);
@@ -112,26 +116,28 @@ nav.links a:hover { color: var(--accent); }
   background: var(--rule);
 }
 
-/* NOW BLOCK — dark terminal inset */
+/* NOW BLOCK */
 .now-block {
   background: var(--bg3);
-  color: #E8DDD0;
+  color: var(--ink2);
   padding: 0.9rem 1rem;
   margin-bottom: 1.75rem;
-  border-left: 3px solid var(--accent2);
+  border-left: 3px solid var(--accent);
   font-family: var(--mono);
   font-size: 0.76rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
 }
 .now-row {
   display: flex;
   align-items: baseline;
   gap: 0.65rem;
   padding: 0.22rem 0;
-  border-bottom: 1px solid #2A2420;
+  border-bottom: 1px solid #1A1510;
 }
 .now-row:last-child { border-bottom: none; }
 .now-key {
-  color: var(--accent2);
+  color: var(--accent);
   min-width: 78px;
   font-size: 0.58rem;
   letter-spacing: 0.12em;
@@ -139,15 +145,15 @@ nav.links a:hover { color: var(--accent); }
   flex-shrink: 0;
   opacity: 0.85;
 }
-.now-val { color: #E8DDD0; line-height: 1.5; }
-.now-val a { color: #7EB8D4; text-decoration: none; }
+.now-val { color: var(--ink2); line-height: 1.5; }
+.now-val a { color: var(--blue); text-decoration: none; }
 .now-val a:hover { text-decoration: underline; }
-.now-val.live { color: #6FCF97; }
-.now-val.dim { color: #6A625A; font-style: italic; }
+.now-val.live { color: var(--green); }
+.now-val.dim { color: var(--muted); font-style: italic; }
 .blink {
   display: inline-block;
   width: 5px; height: 5px;
-  background: #6FCF97;
+  background: var(--green);
   border-radius: 50%;
   margin-right: 5px;
   vertical-align: middle;
@@ -157,6 +163,7 @@ nav.links a:hover { color: var(--accent); }
 .audio-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .audio-row audio { height: 22px; width: 140px; }
 
+/* ABOUT */
 .about-block {
   font-family: var(--mono);
   font-size: 0.83rem;
@@ -165,11 +172,12 @@ nav.links a:hover { color: var(--accent); }
   line-height: 1.8;
 }
 .about-block a { color: var(--blue); text-decoration: none; }
-.about-block a:hover { color: var(--accent); }
+.about-block a:hover { color: var(--accent2); }
 .about-block s { opacity: 0.3; }
 
 /* POSTS */
 .posts-section { margin-bottom: 1.75rem; }
+.posts-loading { color: var(--muted); font-size: 0.75rem; font-style: italic; padding: 0.5rem 0; }
 .post-item { border-bottom: 1px solid var(--rule); }
 .post-item:last-child { border-bottom: none; }
 .post-title-row {
@@ -192,7 +200,7 @@ nav.links a:hover { color: var(--accent); }
   gap: 0.35rem;
   flex: 1;
 }
-.post-title-row:hover .post-title { color: var(--accent); }
+.post-title-row:hover .post-title { color: var(--accent2); }
 .post-chevron {
   font-family: var(--mono);
   color: var(--muted);
@@ -220,9 +228,12 @@ nav.links a:hover { color: var(--accent); }
 }
 .post-body img { max-width: 100%; height: auto; margin: 0.75rem 0; display: block; }
 .post-body p { margin-bottom: 0.6rem; }
+.post-body h1,.post-body h2,.post-body h3 { font-family: var(--serif); color: var(--ink); font-style: italic; margin: 1rem 0 0.4rem; }
+.post-body a { color: var(--blue); }
+.post-body strong { color: var(--ink); font-weight: 500; }
 .post-item.open .post-body { display: block; }
 .post-item.open .post-chevron { transform: rotate(90deg); }
-.post-item.open .post-title { color: var(--accent); }
+.post-item.open .post-title { color: var(--accent2); }
 
 /* CATALOG */
 .catalog-section { margin-bottom: 1.75rem; }
@@ -234,8 +245,9 @@ nav.links a:hover { color: var(--accent); }
 .album-card {
   border: 1px solid var(--rule);
   overflow: hidden;
-  background: var(--bg2);
+  background: var(--surface);
   transition: border-color 0.2s, transform 0.15s;
+  cursor: pointer;
 }
 .album-card:hover { border-color: var(--accent); transform: translateY(-1px); }
 .album-art {
@@ -262,10 +274,102 @@ nav.links a:hover { color: var(--accent); }
 }
 .album-year { font-family: var(--mono); font-size: 0.48rem; color: var(--muted); margin-top: 1px; }
 
+/* ALBUM MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,8,6,0.88);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--accent);
+  max-width: 28rem;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-art {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.modal-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-body { padding: 1.1rem 1.25rem; }
+.modal-title {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+.modal-artist {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+.modal-year {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.modal-desc {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.modal-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.modal-btn {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink2);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+  display: inline-block;
+}
+.modal-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.modal-btn.primary { border-color: var(--accent); color: var(--accent); }
+.modal-btn.primary:hover { background: var(--accent); color: var(--ink); }
+.modal-close {
+  display: block;
+  width: 100%;
+  text-align: right;
+  padding: 0.5rem 0.75rem 0;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  letter-spacing: 0.1em;
+}
+.modal-close:hover { color: var(--ink); }
+
+/* FOOTER */
 .site-footer {
   margin-top: 2.5rem;
   padding-top: 1rem;
-  border-top: 2px solid var(--ink2);
+  border-top: 1px solid var(--rule);
   font-family: var(--mono);
   font-size: 0.58rem;
   color: var(--muted);
@@ -277,9 +381,10 @@ nav.links a:hover { color: var(--accent); }
   letter-spacing: 0.08em;
 }
 .site-footer a { color: var(--muted); text-decoration: none; }
-.site-footer a:hover { color: var(--accent); }
+.site-footer a:hover { color: var(--accent2); }
 
-.page > * { animation: fadein 0.35s ease both; }
+/* FADE IN */
+.page > * { animation: fadein 0.4s ease both; }
 .site-header    { animation-delay: 0s; }
 .now-block      { animation-delay: 0.07s; }
 .about-block    { animation-delay: 0.12s; }
@@ -291,6 +396,21 @@ nav.links a:hover { color: var(--accent); }
 <body>
 
 <canvas id="sigil-canvas"></canvas>
+
+<!-- ALBUM MODAL -->
+<div class="modal-overlay" id="album-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('album-modal').classList.remove('open')">[ close ]</button>
+    <div class="modal-art" id="modal-art"></div>
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-artist" id="modal-artist"></div>
+      <div class="modal-year" id="modal-year"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+</div>
 
 <div class="page">
 
@@ -304,11 +424,10 @@ nav.links a:hover { color: var(--accent); }
       </div>
     </div>
     <nav class="links">
-      
-      <a href="https://marketnihilist.com" target="_blank">Market Nihilist</a>
-      <a href="/archive">Archive</a>
-      <a href="flappyCool/flappy.html">Gamers</a>
-      <a href="https://twitter.com/messages/compose?recipient_id=1765133288866263041" target="_blank">Message</a>
+      <a href="https://twitter.com/messages/compose?recipient_id=1765133288866263041" target="_blank">message me</a>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a>
+      <a href="/archive">archive</a>
+      <a href="flappyCool/flappy.html">gamers</a>
     </nav>
   </header>
 
@@ -318,13 +437,13 @@ nav.links a:hover { color: var(--accent); }
   <div class="now-block">
     <div class="now-row">
       <span class="now-key">status</span>
-      <span class="now-val live"><span class="blink"></span>Welcome to CGB 2.0. Series 66 passed. financial advisor.</span>
+      <span class="now-val live"><span class="blink"></span>series 66 passed. financial advisor, saxony securities.</span>
     </div>
     <div class="now-row">
       <span class="now-key">playing</span>
       <span class="now-val">
         <div class="audio-row">
-          <span style="color:#6A625A">fonk (94bpm).wav — 2023</span>
+          <span style="color:var(--muted)">fonk (94bpm).wav — 2023</span>
           <audio controls>
             <source src="resources/fonk (94bpm).wav" type="audio/mpeg">
           </audio>
@@ -333,15 +452,15 @@ nav.links a:hover { color: var(--accent); }
     </div>
     <div class="now-row">
       <span class="now-key">thinking</span>
-      <span class="now-val dim">optical interconnects. the sovereign moat. what comes next.</span>
+      <span class="now-val dim">optical interconnects. the sovereign moat. what comes after the exam.</span>
     </div>
     <div class="now-row">
       <span class="now-key">reading</span>
-      <span class="now-val dim">Blood Meridian - Cormac McCarthy, That Hideous Strength - C.S. Lewis</span>
+      <span class="now-val dim">—</span>
     </div>
     <div class="now-row">
       <span class="now-key">latest mn</span>
-      <span class="now-val"><a href="https://marketnihilist.com" target="_blank">marketnihilist.com ↗</a></span>
+      <span class="now-val" id="mn-latest-row"><a href="https://marketnihilist.com" target="_blank">marketnihilist.com ↗</a></span>
     </div>
   </div>
 
@@ -354,13 +473,7 @@ nav.links a:hover { color: var(--accent); }
 
   <div class="section-label">transmission</div>
   <div class="posts-section" id="posts-container">
-    <div class="post-item">
-      <div class="post-title-row" onclick="togglePost(this)">
-        <span class="post-title">first post of the new era <span class="post-chevron">›</span></span>
-        <span class="post-meta">4/20/26</span>
-      </div>
-      <div class="post-body"><p>content goes here.</p></div>
-    </div>
+    <div class="posts-loading">loading transmissions...</div>
   </div>
 
   <hr class="rule">
@@ -384,10 +497,46 @@ nav.links a:hover { color: var(--accent); }
 <script>
 feather.replace();
 
-function togglePost(row) {
-  row.closest('.post-item').classList.toggle('open');
+// ─── MODAL ───────────────────────────────────────────────
+function closeModal(e) {
+  if (e.target === document.getElementById('album-modal')) {
+    document.getElementById('album-modal').classList.remove('open');
+  }
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('album-modal').classList.remove('open');
+});
+
+function openAlbum(album) {
+  document.getElementById('modal-art').innerHTML = album.art
+    ? `<img src="${album.art}" alt="${album.title}">`
+    : `<svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="0.8" style="width:60px;height:60px;opacity:0.3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`;
+
+  const parts = album.title.split(' - ');
+  document.getElementById('modal-title').textContent = parts[0] || album.title;
+  document.getElementById('modal-artist').textContent = parts[1] || '';
+  document.getElementById('modal-year').textContent = album.year;
+  document.getElementById('modal-desc').textContent = album.desc || '';
+
+  const actions = document.getElementById('modal-actions');
+  actions.innerHTML = '';
+  if (album.stream) {
+    const a = document.createElement('a');
+    a.href = album.stream; a.target = '_blank';
+    a.className = 'modal-btn primary'; a.textContent = 'stream ↗';
+    actions.appendChild(a);
+  }
+  if (album.download) {
+    const a = document.createElement('a');
+    a.href = album.download; a.download = '';
+    a.className = 'modal-btn'; a.textContent = 'download';
+    actions.appendChild(a);
+  }
+
+  document.getElementById('album-modal').classList.add('open');
 }
 
+// ─── SIGIL — astronomical compass rose ───────────────────
 const canvas = document.getElementById('sigil-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -407,90 +556,242 @@ function seededRandom(seed) {
 
 function drawSigil() {
   const W = canvas.width, H = canvas.height;
-  const cx = W / 2, cy = H * 0.4;
+  const cx = W / 2, cy = H * 0.38;
   const seed = Math.floor(Date.now() / 86400000);
   const rand = seededRandom(seed);
   ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = '#8B3A2A';
+  ctx.strokeStyle = '#C4622D';
 
-  [220, 140, 60].forEach(r => {
-    ctx.lineWidth = 0.8;
+  // outer rings
+  [240, 200, 160, 80, 40].forEach((r, i) => {
+    ctx.lineWidth = i === 0 ? 1 : 0.5;
+    ctx.globalAlpha = i === 0 ? 1 : 0.6;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.stroke();
   });
+  ctx.globalAlpha = 1;
 
-  const spokes = 7 + Math.floor(rand() * 5);
-  ctx.lineWidth = 0.6;
-  for (let i = 0; i < spokes; i++) {
-    const angle = (i / spokes) * Math.PI * 2 + rand() * 0.3;
+  // 8-point compass rose — cardinal + intercardinal
+  const cardinalAngles = Array.from({length: 8}, (_, i) => (i / 8) * Math.PI * 2 - Math.PI / 2);
+  cardinalAngles.forEach((a, i) => {
+    const isCardinal = i % 2 === 0;
+    ctx.lineWidth = isCardinal ? 0.8 : 0.5;
+    ctx.globalAlpha = isCardinal ? 1 : 0.7;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(angle) * 60, cy + Math.sin(angle) * 60);
-    ctx.lineTo(cx + Math.cos(angle) * 220, cy + Math.sin(angle) * 220);
+    ctx.moveTo(cx + Math.cos(a) * 40, cy + Math.sin(a) * 40);
+    ctx.lineTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240);
     ctx.stroke();
-  }
-
-  const pts = 5 + Math.floor(rand() * 4);
-  const angles = Array.from({length: pts}, (_, i) =>
-    (i / pts) * Math.PI * 2 - Math.PI / 2 + rand() * 0.4
-  );
-  ctx.lineWidth = 0.5;
-  for (let i = 0; i < angles.length; i++) {
-    for (let j = i + 1; j < angles.length; j++) {
-      if (rand() > 0.35) {
-        ctx.beginPath();
-        ctx.moveTo(cx + Math.cos(angles[i]) * 140, cy + Math.sin(angles[i]) * 140);
-        ctx.lineTo(cx + Math.cos(angles[j]) * 140, cy + Math.sin(angles[j]) * 140);
-        ctx.stroke();
-      }
+    // arrowhead on cardinal points
+    if (isCardinal) {
+      const tip = { x: cx + Math.cos(a) * 250, y: cy + Math.sin(a) * 250 };
+      const left = { x: cx + Math.cos(a + 0.15) * 230, y: cy + Math.sin(a + 0.15) * 230 };
+      const right = { x: cx + Math.cos(a - 0.15) * 230, y: cy + Math.sin(a - 0.15) * 230 };
+      ctx.beginPath();
+      ctx.moveTo(tip.x, tip.y);
+      ctx.lineTo(left.x, left.y);
+      ctx.lineTo(right.x, right.y);
+      ctx.closePath();
+      ctx.globalAlpha = 0.7;
+      ctx.fill();
     }
-  }
+  });
+  ctx.globalAlpha = 1;
 
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(cx - 12, cy); ctx.lineTo(cx + 12, cy);
-  ctx.moveTo(cx, cy - 12); ctx.lineTo(cx, cy + 12);
-  ctx.stroke();
-
-  ctx.lineWidth = 0.6;
-  for (let i = 0; i < 36; i++) {
-    const a = (i / 36) * Math.PI * 2;
+  // degree tick marks — every 10 degrees, longer every 30
+  ctx.lineWidth = 0.5;
+  for (let deg = 0; deg < 360; deg += 10) {
+    const a = (deg / 360) * Math.PI * 2 - Math.PI / 2;
+    const isThirty = deg % 30 === 0;
+    const r1 = 240;
+    const r2 = isThirty ? 226 : 233;
+    ctx.globalAlpha = isThirty ? 0.9 : 0.5;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * 220, cy + Math.sin(a) * 220);
-    ctx.lineTo(cx + Math.cos(a) * (i % 3 === 0 ? 210 : 215), cy + Math.sin(a) * (i % 3 === 0 ? 210 : 215));
+    ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+    ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
     ctx.stroke();
   }
+  ctx.globalAlpha = 1;
+
+  // inner seeded constellation — unique per day, no pentagrams
+  // use only even-spaced points to avoid 5-fold symmetry
+  const nPts = 6 + (Math.floor(rand() * 3)) * 2; // always even: 6,8,10
+  const starAngles = Array.from({length: nPts}, (_, i) =>
+    (i / nPts) * Math.PI * 2 + rand() * (Math.PI / nPts) * 0.5
+  );
+  const starR = 120 + rand() * 30;
+  ctx.lineWidth = 0.4;
+  ctx.globalAlpha = 0.6;
+  // connect to every other point (skip-1), never skip-2 which makes pentagrams
+  for (let i = 0; i < starAngles.length; i++) {
+    const j = (i + 2) % starAngles.length;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(starAngles[i]) * starR, cy + Math.sin(starAngles[i]) * starR);
+    ctx.lineTo(cx + Math.cos(starAngles[j]) * starR, cy + Math.sin(starAngles[j]) * starR);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // small dots at star points
+  starAngles.forEach(a => {
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(a) * starR, cy + Math.sin(a) * starR, 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#C4622D';
+    ctx.globalAlpha = 0.8;
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+
+  // center crosshair
+  ctx.lineWidth = 0.8;
+  ctx.strokeStyle = '#C4622D';
+  [-16, 16].forEach(d => {
+    ctx.beginPath();
+    ctx.moveTo(cx + d * 0.6, cy); ctx.lineTo(cx + d, cy);
+    ctx.moveTo(cx, cy + d * 0.6); ctx.lineTo(cx, cy + d);
+    ctx.stroke();
+  });
+  ctx.beginPath();
+  ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+  ctx.stroke();
 }
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// CATALOG — swap in real titles, years, art paths
+// ─── MN RSS ──────────────────────────────────────────────
+async function fetchMNLatest() {
+  try {
+    const res = await fetch(
+      'https://api.rss2json.com/v1/api.json?rss_url=https://marketnihilist.substack.com/feed'
+    );
+    const data = await res.json();
+    if (data.items && data.items.length > 0) {
+      const latest = data.items[0];
+      const el = document.getElementById('mn-latest-row');
+      if (el) {
+        el.innerHTML = `<a href="${latest.link}" target="_blank">${latest.title} ↗</a>`;
+      }
+    }
+  } catch(e) {
+    // silently fail — fallback link stays in place
+  }
+}
+fetchMNLatest();
+
+// ─── MARKDOWN POSTS ──────────────────────────────────────
+// posts live in /posts/ as .md files
+// post list is defined in /posts/index.json — array of {file, title, date}
+// format: [{ "file": "my-post.md", "title": "My Post", "date": "4/20/26" }, ...]
+// to add a post: create the .md file, add entry to index.json, push. done.
+
+async function loadPosts() {
+  const container = document.getElementById('posts-container');
+  try {
+    const indexRes = await fetch('/posts/index.json');
+    if (!indexRes.ok) throw new Error('no index');
+    const posts = await indexRes.json();
+
+    if (!posts.length) {
+      container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    posts.forEach(post => {
+      const item = document.createElement('div');
+      item.className = 'post-item';
+      item.innerHTML = `
+        <div class="post-title-row" onclick="togglePost(this)">
+          <span class="post-title">${post.title} <span class="post-chevron">›</span></span>
+          <span class="post-meta">${post.date}</span>
+        </div>
+        <div class="post-body" data-src="/posts/${post.file}">
+          <div class="posts-loading">loading...</div>
+        </div>`;
+      container.appendChild(item);
+    });
+  } catch(e) {
+    // fallback — show placeholder if no posts yet
+    container.innerHTML = `
+      <div class="post-item">
+        <div class="post-title-row" onclick="togglePost(this)">
+          <span class="post-title">first transmission <span class="post-chevron">›</span></span>
+          <span class="post-meta">4/20/26</span>
+        </div>
+        <div class="post-body"><p>add posts to /posts/ to begin.</p></div>
+      </div>`;
+  }
+}
+
+async function togglePost(row) {
+  const item = row.closest('.post-item');
+  const body = item.querySelector('.post-body');
+  const wasOpen = item.classList.contains('open');
+  item.classList.toggle('open');
+
+  // lazy load markdown on first open
+  if (!wasOpen && body.dataset.src && !body.dataset.loaded) {
+    try {
+      const res = await fetch(body.dataset.src);
+      const md = await res.text();
+      body.innerHTML = renderMarkdown(md);
+      body.dataset.loaded = '1';
+    } catch(e) {
+      body.innerHTML = '<p style="color:var(--muted)">could not load post.</p>';
+    }
+  }
+}
+
+// minimal markdown renderer — handles the basics
+function renderMarkdown(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/^---$/gm, '<hr style="border-color:var(--rule);margin:0.75rem 0">')
+    .split('\n\n')
+    .map(p => p.trim() && !p.startsWith('<') ? `<p>${p.replace(/\n/g, '<br>')}</p>` : p)
+    .join('\n');
+}
+
+loadPosts();
+
+// ─── CATALOG ─────────────────────────────────────────────
+// art path: 'resources/album-art/filename.jpg'
+// stream: link to spotify/apple/etc
+// download: direct file path if hosting the file
+// desc: one or two lines shown in modal
 const albums = [
-  { title: 'Exit 33 - SLUMP',                          year: '2016', art: 'resources/album-art/exit33.jpg' },
-  { title: 'summersover - SLUMP',                      year: '2017', art: 'resources/album-art/summersover.jpg' },
-  { title: '93ultra - Raymond Felix',                   year: '2017', art: 'resources/album-art/93ultra.jpg' },
-  { title: 'SPEED DEMON - Raymond Felix',               year: '2018', art: 'resources/album-art/SPEED DEMON.jpg' },
-  { title: 'TBTFL - Raymond Felix',                     year: '2019', art: 'resources/album-art/TBTFL.jpg' },
-  { title: 'Speed Hype I - Speed Hype',                 year: '2019', art: 'resources/album-art/SH1.jpeg' },
-  { title: 'Speed Hype II - Speed Hype',                year: '2020', art: 'resources/album-art/SH2.jpeg' },
-  { title: 'Speed Hype III - Speed Hype',               year: '2020', art: 'resources/album-art/SH3.jpeg' },
-  { title: 'Pay Attention - Speed Hype',                year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg' },
-  { title: 'Leave Your Ego at The Door - tenawai',      year: '2021', art: 'resources/album-art/LYEATD.jpeg' },
-  { title: 'ART IS A SIN - Raymond Felix',              year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg' },
-  { title: 'I Am The Ship - Raymond Felix',             year: '2023', art: 'resources/album-art/I Am The Ship.png' },
+  { title: 'Exit 33',         artist: 'SLUMP',          year: '2016', art: 'resources/album-art/exit33.jpg',           stream: null, download: null, desc: '' },
+  { title: 'summersover',     artist: 'SLUMP',          year: '2017', art: 'resources/album-art/summersover.jpg',      stream: null, download: null, desc: '' },
+  { title: '93ultra',         artist: 'Raymond Felix',  year: '2017', art: 'resources/album-art/93ultra.jpg',          stream: null, download: null, desc: '' },
+  { title: 'SPEED DEMON',     artist: 'Raymond Felix',  year: '2018', art: 'resources/album-art/SPEED DEMON.jpg',      stream: null, download: null, desc: '' },
+  { title: 'TBTFL',           artist: 'Raymond Felix',  year: '2019', art: 'resources/album-art/TBTFL.jpg',            stream: null, download: null, desc: '' },
+  { title: 'Speed Hype I',    artist: 'Speed Hype',     year: '2019', art: 'resources/album-art/SH1.jpeg',             stream: null, download: null, desc: '' },
+  { title: 'Speed Hype II',   artist: 'Speed Hype',     year: '2020', art: 'resources/album-art/SH2.jpeg',             stream: null, download: null, desc: '' },
+  { title: 'Speed Hype III',  artist: 'Speed Hype',     year: '2020', art: 'resources/album-art/SH3.jpeg',             stream: null, download: null, desc: '' },
+  { title: 'Pay Attention',   artist: 'Speed Hype',     year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg',   stream: null, download: null, desc: '' },
+  { title: 'LYEATD',          artist: 'tenawai',        year: '2021', art: 'resources/album-art/LYEATD.jpeg',          stream: null, download: null, desc: '' },
+  { title: 'ART IS A SIN',    artist: 'Raymond Felix',  year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg',    stream: null, download: null, desc: '' },
+  { title: 'I Am The Ship',   artist: 'Raymond Felix',  year: '2023', art: 'resources/album-art/I Am The Ship.png',    stream: null, download: null, desc: '' },
 ];
-  
+
 const grid = document.getElementById('catalog-grid');
 albums.forEach(a => {
   const card = document.createElement('div');
   card.className = 'album-card';
+  card.onclick = () => openAlbum(a);
   card.innerHTML = `
     <div class="album-art">
       ${a.art
         ? `<img src="${a.art}" alt="${a.title}">`
         : `<div class="album-art-placeholder">
-             <svg viewBox="0 0 24 24" fill="none" stroke="#8B3A2A" stroke-width="1.5">
+             <svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="1.5">
                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
              </svg>
            </div>`
