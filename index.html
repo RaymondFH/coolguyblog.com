@@ -467,20 +467,20 @@ resizeCanvas();
 
 // CATALOG — swap in real titles, years, art paths
 const albums = [
-  { title: 'Exit 33 - SLUMP',      year: '2016', art: null },
-  { title: 'SLUMP - summersover',   year: '2017', art: null },
-  { title: '93ultra - Raymond Felix',      year: '2017', art: null },
-  { title: 'Tripping Before the Finish Line - Raymond Felix',    year: '2019', art: null },
-  { title: 'SPEED DEMON - Raymond Felix',    year: '2018', art: null },
-  { title: 'Speed Hype I - Speed Hype',     year: '2019', art: null },
-  { title: 'Speed Hype II - Speed Hype',     year: '2020', art: null },
-  { title: 'Speed Hype III - Speed Hype',      year: '2020', art: null },
-  { title: 'Pay Attention - Speed Hype', year: '2021', art: null },
-  { title: 'Leave Your Ego at The Door - tenawai',      year: '2021', art: null },
-  { title: 'ART IS A SIN - Raymond Felix',    year: '2022', art: null },
-  { title: 'I Am The Ship - Raymond Felix',     year: '2023', art: null },
+  { title: 'Exit 33 - SLUMP',                          year: '2016', art: 'resources/album-art/exit33.jpg' },
+  { title: 'summersover - SLUMP',                      year: '2017', art: 'resources/album-art/summersover.jpg' },
+  { title: '93ultra - Raymond Felix',                   year: '2017', art: 'resources/album-art/93ultra.jpg' },
+  { title: 'SPEED DEMON - Raymond Felix',               year: '2018', art: 'resources/album-art/SPEED DEMON.jpg' },
+  { title: 'TBTFL - Raymond Felix',                     year: '2019', art: 'resources/album-art/TBTFL.jpg' },
+  { title: 'Speed Hype I - Speed Hype',                 year: '2019', art: 'resources/album-art/SH1.jpeg' },
+  { title: 'Speed Hype II - Speed Hype',                year: '2020', art: 'resources/album-art/SH2.jpeg' },
+  { title: 'Speed Hype III - Speed Hype',               year: '2020', art: 'resources/album-art/SH3.jpeg' },
+  { title: 'Pay Attention - Speed Hype',                year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg' },
+  { title: 'Leave Your Ego at The Door - tenawai',      year: '2021', art: 'resources/album-art/LYEATD.jpeg' },
+  { title: 'ART IS A SIN - Raymond Felix',              year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg' },
+  { title: 'I Am The Ship - Raymond Felix',             year: '2023', art: 'resources/album-art/I Am The Ship.png' },
 ];
-
+  
 const grid = document.getElementById('catalog-grid');
 albums.forEach(a => {
   const card = document.createElement('div');
