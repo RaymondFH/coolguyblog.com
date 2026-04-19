@@ -1,180 +1,506 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<link rel="icon" href="/twittergrep/favicon.png" />
-	<title>coolguy</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="coolguy" />
-	<head>
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-	</head>
-	
-	<link rel="icon" type="image/x-icon" href="resources/coolguy.png">
-	<link rel="stylesheet" type="text/css" media="screen" href="blog.css" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>coolguy</title>
+<link rel="icon" type="image/x-icon" href="resources/coolguy.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+:root {
+  --bg:     #F2EDE4;
+  --bg2:    #E8E0D4;
+  --bg3:    #1A1410;
+  --ink:    #1A1410;
+  --ink2:   #3D3530;
+  --muted:  #7A6F65;
+  --accent: #8B3A2A;
+  --accent2:#C4622D;
+  --green:  #2D6A4F;
+  --blue:   #2C5F8A;
+  --rule:   #C8BFB4;
+  --mono:   'DM Mono', monospace;
+  --serif:  'DM Serif Display', serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+::selection { background: rgba(139,58,42,0.18); }
 
-	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+#sigil-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 6rem;
+}
+
+.site-header { margin-bottom: 1.75rem; }
+.site-title a {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+  font-style: italic;
+}
+.site-title a:hover { color: var(--accent); }
+.site-desc {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 0.1rem;
+}
+.site-desc h3 {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 400;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-transform: uppercase;
+}
+.social-icons { display: flex; align-items: center; gap: 10px; }
+.social-icons a { color: var(--muted); transition: color 0.15s; }
+.social-icons a:hover { color: var(--accent); }
+.social-icons svg { width: 13px; height: 13px; vertical-align: middle; }
+nav.links { margin-top: 0.5rem; }
+nav.links a {
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 0.78rem;
+  margin-right: 1rem;
+  font-family: var(--mono);
+  transition: color 0.15s;
+}
+nav.links a:hover { color: var(--accent); }
+
+.rule { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
+.rule.heavy { border-top: 2px solid var(--ink2); margin: 1.5rem 0; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* NOW BLOCK — dark terminal inset */
+.now-block {
+  background: var(--bg3);
+  color: #E8DDD0;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.75rem;
+  border-left: 3px solid var(--accent2);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+}
+.now-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  padding: 0.22rem 0;
+  border-bottom: 1px solid #2A2420;
+}
+.now-row:last-child { border-bottom: none; }
+.now-key {
+  color: var(--accent2);
+  min-width: 78px;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.now-val { color: #E8DDD0; line-height: 1.5; }
+.now-val a { color: #7EB8D4; text-decoration: none; }
+.now-val a:hover { text-decoration: underline; }
+.now-val.live { color: #6FCF97; }
+.now-val.dim { color: #6A625A; font-style: italic; }
+.blink {
+  display: inline-block;
+  width: 5px; height: 5px;
+  background: #6FCF97;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+  animation: blink 1.6s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.1} }
+.audio-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.audio-row audio { height: 22px; width: 140px; }
+
+.about-block {
+  font-family: var(--mono);
+  font-size: 0.83rem;
+  color: var(--ink2);
+  margin-bottom: 1.75rem;
+  line-height: 1.8;
+}
+.about-block a { color: var(--blue); text-decoration: none; }
+.about-block a:hover { color: var(--accent); }
+.about-block s { opacity: 0.3; }
+
+/* POSTS */
+.posts-section { margin-bottom: 1.75rem; }
+.post-item { border-bottom: 1px solid var(--rule); }
+.post-item:last-child { border-bottom: none; }
+.post-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+}
+.post-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ink);
+  font-style: italic;
+  transition: color 0.15s;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  flex: 1;
+}
+.post-title-row:hover .post-title { color: var(--accent); }
+.post-chevron {
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 0.68rem;
+  transition: transform 0.2s;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.post-meta {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.post-body {
+  display: none;
+  padding: 0.4rem 0 0.9rem 1rem;
+  color: var(--ink2);
+  font-family: var(--mono);
+  font-size: 0.83rem;
+  line-height: 1.8;
+  border-left: 2px solid var(--rule);
+  margin-bottom: 0.4rem;
+}
+.post-body img { max-width: 100%; height: auto; margin: 0.75rem 0; display: block; }
+.post-body p { margin-bottom: 0.6rem; }
+.post-item.open .post-body { display: block; }
+.post-item.open .post-chevron { transform: rotate(90deg); }
+.post-item.open .post-title { color: var(--accent); }
+
+/* CATALOG */
+.catalog-section { margin-bottom: 1.75rem; }
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.45rem;
+}
+.album-card {
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  background: var(--bg2);
+  transition: border-color 0.2s, transform 0.15s;
+}
+.album-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.album-art {
+  width: 100%; aspect-ratio: 1;
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.album-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.album-art-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.album-art-placeholder svg { width: 18px; height: 18px; opacity: 0.18; }
+.album-info { padding: 0.28rem 0.38rem; }
+.album-title {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.album-year { font-family: var(--mono); font-size: 0.48rem; color: var(--muted); margin-top: 1px; }
+
+.site-footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--ink2);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent); }
+
+.page > * { animation: fadein 0.35s ease both; }
+.site-header    { animation-delay: 0s; }
+.now-block      { animation-delay: 0.07s; }
+.about-block    { animation-delay: 0.12s; }
+.posts-section  { animation-delay: 0.16s; }
+.catalog-section{ animation-delay: 0.2s; }
+@keyframes fadein { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } }
+</style>
 </head>
-
 <body>
-	<div class="container wrapper">
-		<div class="header">
-			<h1 class="site-title"><a href="">coolguy</a></h1>
-			<div class="site-description">
-				<h3>Producer of Products in Multiple Mediums</h3>
-			
-				<nav class="nav social">
-					<ul class="flat"><a href="https://github.com/RaymondFH/" title="Github"><i data-feather="github"></i></a><a
-							href="https://x.com/marketnihilist" title="Twitter"><i data-feather="twitter"></i></a></ul>
-				</nav>
-			</div>
 
-			<nav class="nav">
-				<ul class="flat">
+<canvas id="sigil-canvas"></canvas>
 
+<div class="page">
 
-					<li>
-						<a href="https://twitter.com/messages/compose?recipient_id=1765133288866263041" target=”_blank”>message me</a>
-					</li> 
+  <header class="site-header">
+    <h1 class="site-title"><a href="">coolguy</a></h1>
+    <div class="site-desc">
+      <h3>Producer of Products in Multiple Mediums</h3>
+      <div class="social-icons">
+        <a href="https://github.com/RaymondFH/" title="Github"><i data-feather="github"></i></a>
+        <a href="https://x.com/marketnihilist" title="Twitter"><i data-feather="twitter"></i></a>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="https://twitter.com/messages/compose?recipient_id=1765133288866263041" target="_blank">message me</a>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a>
+      <a href="/archive">archive</a>
+      <a href="flappyCool/flappy.html">gamers</a>
+    </nav>
+  </header>
 
-					<!--
+  <hr class="rule heavy">
 
-					<li>
-						<a href="https://www.raymondfh.net/">Portfolio</a>
-					</li>
+  <div class="section-label">now</div>
+  <div class="now-block">
+    <div class="now-row">
+      <span class="now-key">status</span>
+      <span class="now-val live"><span class="blink"></span>series 66 passed. financial advisor, saxony securities.</span>
+    </div>
+    <div class="now-row">
+      <span class="now-key">playing</span>
+      <span class="now-val">
+        <div class="audio-row">
+          <span style="color:#6A625A">fonk (94bpm).wav — 2023</span>
+          <audio controls>
+            <source src="resources/fonk (94bpm).wav" type="audio/mpeg">
+          </audio>
+        </div>
+      </span>
+    </div>
+    <div class="now-row">
+      <span class="now-key">thinking</span>
+      <span class="now-val dim">optical interconnects. the sovereign moat. what comes after the exam.</span>
+    </div>
+    <div class="now-row">
+      <span class="now-key">reading</span>
+      <span class="now-val dim">—</span>
+    </div>
+    <div class="now-row">
+      <span class="now-key">latest mn</span>
+      <span class="now-val"><a href="https://marketnihilist.com" target="_blank">marketnihilist.com ↗</a></span>
+    </div>
+  </div>
 
-					
-					<li>
-						<a href="https://proverbsai.com/">ProverbsAI.com</a>
-					</li> 
-					-->
+  <div class="about-block">
+    autodidactic psychopomp. formerly: musician, marketing consultant, pr writer, web developer. current financial mystic, and secret author of <a href="https://marketnihilist.com">Market Nihilist</a>.<br><br>
+    a cool guy learning cool things. currently thinking about <s>programming</s>, macroeconomics, quantum computing, AI, robotics, philosophy, history, and theology.
+  </div>
 
-					<li>
-						<a href="https://marketnihilist.com">read Market Nihilist</a>
-					</li> 
+  <hr class="rule">
 
-					<li>
-						<a href="flappyCool/flappy.html">gamers click here</a>
-					</li>
-					
-				</ul>
-			</nav>
-		</div>
-		<div>
+  <div class="section-label">transmission</div>
+  <div class="posts-section" id="posts-container">
+    <div class="post-item">
+      <div class="post-title-row" onclick="togglePost(this)">
+        <span class="post-title">first post of the new era <span class="post-chevron">›</span></span>
+        <span class="post-meta">4/20/26</span>
+      </div>
+      <div class="post-body"><p>content goes here.</p></div>
+    </div>
+  </div>
 
-			<div>
+  <hr class="rule">
 
-				<div class="recent-posts section">
-				</div>
-				<div class="dot-plan section">
-					<h3 class="section-header">
-						about
-					</h3>
-				<div class="meta subscribe-beg"> autodidactic psychopomp. formerly: musician, marketing consultant, pr writer, web developer. current financial mystic, and secret author of <a href=https://marketnihilist.com>Market Nihilist</a> 
-					<br><br>
-					a cool guy learning cool things. currently thinking about <s>programming</s>, macroeconomics, quantum computing, AI, robotics, philosophy, history, and theology. sharing what i find on the hero's journey.
-				</div>
-				<br>
-				<div class="audio-player">
-					<b><i>now playing:</b> fonk (94bpm).wav (2023)  </i>	
-					<br>
-					<audio controls>
-						<source src="resources/fonk (94bpm).wav" type="audio/mpeg">
-					  </audio>					  
-				</div>
-					<div class="dotplanIsLoading" id="dotplanContainer">
-						<iframe id="dotplanFrame"
-							src="https://docs.google.com/document/d/e/2PACX-1vTeEvbIR4sQuuMYfQPtWDj6Nas_0fhwFy3Zw7IzMwuifP2X9uZSM8nCwccMzh6iG0UI1QgXgpBvzZd-/pub?embedded=true" max-width="100%" height="max">
-						</iframe>
-					</div>
-				</div>
+  <div class="section-label">the catalog</div>
+  <div class="catalog-section">
+    <div class="catalog-grid" id="catalog-grid"></div>
+  </div>
 
-				<div class="recent-posts section">
-				</div>
-			</div>
-		</div>
-		
-		
-		<!-- content above here -->
-		<a href="https://twitter.com/marketnihilist?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow Me on X</a>
-		
-		<script>
-			feather.replace()
+  <footer class="site-footer">
+    <span>raymond felix II</span>
+    <span>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a> ·
+      <a href="/archive">archive</a> ·
+      <a href="https://github.com/RaymondFH/">github</a>
+    </span>
+  </footer>
 
-			// START INJECTION 
-			function removeSecretClass() {
-				// select all the div elements on the page
-				const divs = document.querySelectorAll('#secret');
+</div>
 
-				// loop through each div and remove the "secret" class
-				divs.forEach(div => {
-					if (div.classList.contains('secret')) {
-						div.classList.remove('secret');
-					} else {
-						div.classList.add('secret');
-					}
-				});
-			}
+<script>
+feather.replace();
 
-			// START GDOCS UNEMBEDDING SCRIPT
-			var iframes = document.getElementsByTagName("iframe");
-			for (let i = 0; i < iframes.length; i++) {
-				var url = iframes[i].getAttribute("src");
-				console.log({ url });
-				if (url.startsWith("https://docs.google.com/document/d/")) {
-					// create div and replace iframe
-					let d = document.createElement('div');
-					d.classList.add("embedded-doc"); // optional
+function togglePost(row) {
+  row.closest('.post-item').classList.toggle('open');
+}
 
-					// CORS request
-					var xhr = new XMLHttpRequest();
-					xhr.open('GET', url, true);
-					xhr.onload = function () {
-						// display response
-						// console.log(xhr.responseText);
-						d.innerHTML = xhr.responseText;
+const canvas = document.getElementById('sigil-canvas');
+const ctx = canvas.getContext('2d');
 
-						let scriptChildren = d.querySelectorAll('script');
-						scriptChildren.forEach(script => {
-							script.parentNode.removeChild(script);
-						});
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  drawSigil();
+}
 
-						let styleChildren = d.querySelectorAll('style');
-						styleChildren.forEach(style => {
-							const cssString = style.innerText;
-							const modifiedCss = cssString.replace(/\}/g, '}.embedded-doc ');
-							const lineSpacingFix = modifiedCss.replace(/\line-height/g, 'foo');
-							style.innerHTML = lineSpacingFix;
-						});
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
 
-						// Add max-width: 100% to all sub-elements of 'd'
-						let subElements = d.querySelectorAll('*');
-						subElements.forEach(element => {
-							element.style.maxWidth = '100%';
-							element.style.removeProperty('height');
+function drawSigil() {
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H * 0.4;
+  const seed = Math.floor(Date.now() / 86400000);
+  const rand = seededRandom(seed);
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#8B3A2A';
 
-							if (element.tagName.toLowerCase() !== 'li') {
-								element.style.overflow = 'hidden';
-							}
-						});
+  [220, 140, 60].forEach(r => {
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.stroke();
+  });
 
-						iframes[i].parentElement.replaceChild(d, iframes[i]);
+  const spokes = 7 + Math.floor(rand() * 5);
+  ctx.lineWidth = 0.6;
+  for (let i = 0; i < spokes; i++) {
+    const angle = (i / spokes) * Math.PI * 2 + rand() * 0.3;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(angle) * 60, cy + Math.sin(angle) * 60);
+    ctx.lineTo(cx + Math.cos(angle) * 220, cy + Math.sin(angle) * 220);
+    ctx.stroke();
+  }
 
-						// Find the HTML element by its ID
-						const element = document.getElementById("dotplanContainer");
+  const pts = 5 + Math.floor(rand() * 4);
+  const angles = Array.from({length: pts}, (_, i) =>
+    (i / pts) * Math.PI * 2 - Math.PI / 2 + rand() * 0.4
+  );
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i < angles.length; i++) {
+    for (let j = i + 1; j < angles.length; j++) {
+      if (rand() > 0.35) {
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(angles[i]) * 140, cy + Math.sin(angles[i]) * 140);
+        ctx.lineTo(cx + Math.cos(angles[j]) * 140, cy + Math.sin(angles[j]) * 140);
+        ctx.stroke();
+      }
+    }
+  }
 
-						// Remove the class from the HTML element
-						element.classList.remove("dotplanIsLoading");
-					};
-					xhr.send();
-				}
-			}
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(cx - 12, cy); ctx.lineTo(cx + 12, cy);
+  ctx.moveTo(cx, cy - 12); ctx.lineTo(cx, cy + 12);
+  ctx.stroke();
 
-		</script>
+  ctx.lineWidth = 0.6;
+  for (let i = 0; i < 36; i++) {
+    const a = (i / 36) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * 220, cy + Math.sin(a) * 220);
+    ctx.lineTo(cx + Math.cos(a) * (i % 3 === 0 ? 210 : 215), cy + Math.sin(a) * (i % 3 === 0 ? 210 : 215));
+    ctx.stroke();
+  }
+}
 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
+// CATALOG — swap in real titles, years, art paths
+const albums = [
+  { title: 'album one',      year: '2013', art: null },
+  { title: 'album two',      year: '2014', art: null },
+  { title: 'album three',    year: '2015', art: null },
+  { title: 'album four',     year: '2016', art: null },
+  { title: 'album five',     year: '2017', art: null },
+  { title: 'album six',      year: '2018', art: null },
+  { title: 'album seven',    year: '2019', art: null },
+  { title: 'album eight',    year: '2020', art: null },
+  { title: 'album nine',     year: '2021', art: null },
+  { title: 'album ten',      year: '2022', art: null },
+  { title: 'album eleven',   year: '2023', art: null },
+  { title: 'fonk (tribute)', year: '2024', art: null },
+];
+
+const grid = document.getElementById('catalog-grid');
+albums.forEach(a => {
+  const card = document.createElement('div');
+  card.className = 'album-card';
+  card.innerHTML = `
+    <div class="album-art">
+      ${a.art
+        ? `<img src="${a.art}" alt="${a.title}">`
+        : `<div class="album-art-placeholder">
+             <svg viewBox="0 0 24 24" fill="none" stroke="#8B3A2A" stroke-width="1.5">
+               <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+             </svg>
+           </div>`
+      }
+    </div>
+    <div class="album-info">
+      <div class="album-title">${a.title}</div>
+      <div class="album-year">${a.year}</div>
+    </div>`;
+  grid.appendChild(card);
+});
+</script>
 </body>
-
 </html>
