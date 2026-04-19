@@ -55,7 +55,6 @@ body {
   padding: 2rem 1.25rem 6rem;
 }
 
-/* HEADER */
 .site-header { margin-bottom: 1.75rem; }
 .site-title a {
   font-family: var(--serif);
@@ -111,24 +110,12 @@ nav.links a:hover { color: var(--accent2); }
   gap: 0.5rem;
   cursor: default;
 }
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--rule);
-}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
 .section-label.collapsible { cursor: pointer; user-select: none; }
 .section-label.collapsible:hover { color: var(--accent2); }
-.section-toggle {
-  font-size: 0.55rem;
-  color: var(--muted);
-  transition: transform 0.2s;
-  display: inline-block;
-  margin-left: 0.25rem;
-}
+.section-toggle { font-size: 0.55rem; color: var(--muted); transition: transform 0.2s; display: inline-block; margin-left: 0.25rem; }
 .section-label.collapsed .section-toggle { transform: rotate(-90deg); }
 
-/* NOW BLOCK */
 .now-block {
   background: var(--bg3);
   color: var(--ink2);
@@ -139,42 +126,19 @@ nav.links a:hover { color: var(--accent2); }
   font-family: var(--mono);
   font-size: 0.76rem;
 }
-.now-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.65rem;
-  padding: 0.22rem 0;
-  border-bottom: 1px solid #1A1510;
-}
+.now-row { display: flex; align-items: baseline; gap: 0.65rem; padding: 0.22rem 0; border-bottom: 1px solid #1A1510; }
 .now-row:last-child { border-bottom: none; }
-.now-key {
-  color: var(--accent);
-  min-width: 78px;
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-  opacity: 0.85;
-}
+.now-key { color: var(--accent); min-width: 78px; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; opacity: 0.85; }
 .now-val { color: var(--ink2); line-height: 1.5; }
 .now-val a { color: var(--blue); text-decoration: none; }
 .now-val a:hover { text-decoration: underline; }
 .now-val.live { color: var(--green); }
 .now-val.dim { color: var(--muted); font-style: italic; }
-.blink {
-  display: inline-block;
-  width: 5px; height: 5px;
-  background: var(--green);
-  border-radius: 50%;
-  margin-right: 5px;
-  vertical-align: middle;
-  animation: blink 1.6s infinite;
-}
+.blink { display: inline-block; width: 5px; height: 5px; background: var(--green); border-radius: 50%; margin-right: 5px; vertical-align: middle; animation: blink 1.6s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.1} }
 .audio-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .audio-row audio { height: 22px; width: 140px; }
 
-/* BIO */
 .bio-block {
   font-family: var(--mono);
   font-size: 0.83rem;
@@ -188,136 +152,34 @@ nav.links a:hover { color: var(--accent2); }
 .bio-block a { color: var(--blue); text-decoration: none; }
 .bio-block a:hover { color: var(--accent2); }
 
-/* TICKERS */
-.tickers-row {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.75rem;
-}
-.ticker-card {
-  background: var(--bg3);
-  border: 1px solid var(--rule);
-  padding: 0.5rem 0.7rem;
-  min-width: 80px;
-  flex: 1;
-}
-.ticker-symbol {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  color: var(--accent);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.2rem;
-}
-.ticker-price {
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  color: var(--ink);
-  font-weight: 500;
-}
-.ticker-change {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  margin-top: 0.1rem;
-}
+.tickers-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+.ticker-card { background: var(--bg3); border: 1px solid var(--rule); padding: 0.5rem 0.7rem; min-width: 80px; flex: 1; }
+.ticker-symbol { font-family: var(--mono); font-size: 0.58rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.2rem; }
+.ticker-price { font-family: var(--mono); font-size: 0.85rem; color: var(--ink); font-weight: 500; }
+.ticker-change { font-family: var(--mono); font-size: 0.58rem; margin-top: 0.1rem; }
 .ticker-change.up { color: var(--green); }
 .ticker-change.down { color: var(--red); }
 .ticker-change.flat { color: var(--muted); }
-.tickers-note {
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  color: var(--muted);
-  margin-bottom: 1.75rem;
-  margin-top: -1.2rem;
-  font-style: italic;
-}
+.tickers-note { font-family: var(--mono); font-size: 0.55rem; color: var(--muted); margin-bottom: 1.75rem; margin-top: -1.2rem; font-style: italic; }
 
-/* THESIS */
 .thesis-section { margin-bottom: 1.75rem; }
-.thesis-item {
-  border-bottom: 1px solid var(--rule);
-  padding: 0.65rem 0;
-}
+.thesis-item { border-bottom: 1px solid var(--rule); padding: 0.65rem 0; }
 .thesis-item:last-child { border-bottom: none; }
-.thesis-title {
-  font-family: var(--serif);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--ink);
-  text-decoration: none;
-  display: block;
-  margin-bottom: 0.2rem;
-  transition: color 0.15s;
-}
+.thesis-title { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink); text-decoration: none; display: block; margin-bottom: 0.2rem; transition: color 0.15s; }
 .thesis-title:hover { color: var(--accent2); }
-.thesis-desc {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.thesis-tag {
-  font-family: var(--mono);
-  font-size: 0.52rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-right: 0.5rem;
-  opacity: 0.7;
-}
+.thesis-desc { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
+.thesis-tag { font-family: var(--mono); font-size: 0.52rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-right: 0.5rem; opacity: 0.7; }
 
-/* POSTS */
 .posts-section { margin-bottom: 1.75rem; }
 .posts-loading { color: var(--muted); font-size: 0.75rem; font-style: italic; padding: 0.5rem 0; }
 .post-item { border-bottom: 1px solid var(--rule); }
 .post-item:last-child { border-bottom: none; }
-.post-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  cursor: pointer;
-  user-select: none;
-  padding: 0.5rem 0;
-  gap: 0.5rem;
-}
-.post-title {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--ink);
-  font-style: italic;
-  transition: color 0.15s;
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  flex: 1;
-}
+.post-title-row { display: flex; justify-content: space-between; align-items: baseline; cursor: pointer; user-select: none; padding: 0.5rem 0; gap: 0.5rem; }
+.post-title { font-family: var(--serif); font-size: 1rem; color: var(--ink); font-style: italic; transition: color 0.15s; display: flex; align-items: baseline; gap: 0.35rem; flex: 1; }
 .post-title-row:hover .post-title { color: var(--accent2); }
-.post-chevron {
-  font-family: var(--mono);
-  color: var(--muted);
-  font-size: 0.68rem;
-  transition: transform 0.2s;
-  display: inline-block;
-  flex-shrink: 0;
-}
-.post-meta {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  color: var(--muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.post-body {
-  display: none;
-  padding: 0.4rem 0 0.9rem 1rem;
-  color: var(--ink2);
-  font-family: var(--mono);
-  font-size: 0.83rem;
-  line-height: 1.8;
-  border-left: 2px solid var(--rule);
-  margin-bottom: 0.4rem;
-}
+.post-chevron { font-family: var(--mono); color: var(--muted); font-size: 0.68rem; transition: transform 0.2s; display: inline-block; flex-shrink: 0; }
+.post-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+.post-body { display: none; padding: 0.4rem 0 0.9rem 1rem; color: var(--ink2); font-family: var(--mono); font-size: 0.83rem; line-height: 1.8; border-left: 2px solid var(--rule); margin-bottom: 0.4rem; }
 .post-body img { max-width: 100%; height: auto; margin: 0.75rem 0; display: block; }
 .post-body p { margin-bottom: 0.6rem; }
 .post-body h1,.post-body h2,.post-body h3 { font-family: var(--serif); color: var(--ink); font-style: italic; margin: 1rem 0 0.4rem; }
@@ -327,69 +189,23 @@ nav.links a:hover { color: var(--accent2); }
 .post-item.open .post-chevron { transform: rotate(90deg); }
 .post-item.open .post-title { color: var(--accent2); }
 
-/* CATALOG */
 .catalog-section { margin-bottom: 1.75rem; }
 .catalog-body { overflow: hidden; transition: max-height 0.35s ease; }
 .catalog-body.collapsed { max-height: 0 !important; }
-.catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-  gap: 0.45rem;
-  padding-top: 0.1rem;
-}
-.album-card {
-  border: 1px solid var(--rule);
-  overflow: hidden;
-  background: var(--surface);
-  transition: border-color 0.2s, transform 0.15s;
-  cursor: pointer;
-}
+.catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 0.45rem; padding-top: 0.1rem; }
+.album-card { border: 1px solid var(--rule); overflow: hidden; background: var(--surface); transition: border-color 0.2s, transform 0.15s; cursor: pointer; }
 .album-card:hover { border-color: var(--accent); transform: translateY(-1px); }
-.album-art {
-  width: 100%; aspect-ratio: 1;
-  background: var(--bg3);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
+.album-art { width: 100%; aspect-ratio: 1; background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .album-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .album-art-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
 .album-art-placeholder svg { width: 18px; height: 18px; opacity: 0.18; }
 .album-info { padding: 0.28rem 0.38rem; }
-.album-title {
-  font-family: var(--mono);
-  font-size: 0.52rem;
-  color: var(--ink);
-  font-weight: 500;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
+.album-title { font-family: var(--mono); font-size: 0.52rem; color: var(--ink); font-weight: 500; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; letter-spacing: 0.05em; }
 .album-year { font-family: var(--mono); font-size: 0.48rem; color: var(--muted); margin-top: 1px; }
 
-/* MODAL */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(10,8,6,0.88);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,8,6,0.88); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; }
 .modal-overlay.open { display: flex; }
-.modal {
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-top: 2px solid var(--accent);
-  max-width: 28rem;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-}
+.modal { background: var(--bg2); border: 1px solid var(--rule); border-top: 2px solid var(--accent); max-width: 28rem; width: 100%; max-height: 90vh; overflow-y: auto; }
 .modal-art { width: 100%; aspect-ratio: 1; background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .modal-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .modal-body { padding: 1.1rem 1.25rem; }
@@ -398,53 +214,14 @@ nav.links a:hover { color: var(--accent2); }
 .modal-year { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); margin-bottom: 0.75rem; }
 .modal-desc { font-family: var(--mono); font-size: 0.78rem; color: var(--ink2); line-height: 1.7; margin-bottom: 1rem; }
 .modal-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.modal-btn {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.4rem 0.8rem;
-  border: 1px solid var(--rule);
-  background: transparent;
-  color: var(--ink2);
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
-  display: inline-block;
-}
+.modal-btn { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.4rem 0.8rem; border: 1px solid var(--rule); background: transparent; color: var(--ink2); cursor: pointer; text-decoration: none; transition: border-color 0.15s, color 0.15s; display: inline-block; }
 .modal-btn:hover { border-color: var(--accent2); color: var(--accent2); }
 .modal-btn.primary { border-color: var(--accent); color: var(--accent); }
 .modal-btn.primary:hover { background: var(--accent); color: var(--ink); }
-.modal-close {
-  display: block;
-  width: 100%;
-  text-align: right;
-  padding: 0.5rem 0.75rem 0;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--muted);
-  cursor: pointer;
-  background: none;
-  border: none;
-  letter-spacing: 0.1em;
-}
+.modal-close { display: block; width: 100%; text-align: right; padding: 0.5rem 0.75rem 0; font-family: var(--mono); font-size: 0.65rem; color: var(--muted); cursor: pointer; background: none; border: none; letter-spacing: 0.1em; }
 .modal-close:hover { color: var(--ink); }
 
-/* FOOTER */
-.site-footer {
-  margin-top: 2.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
+.site-footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.58rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--accent2); }
 
@@ -463,7 +240,6 @@ nav.links a:hover { color: var(--accent2); }
 
 <canvas id="sigil-canvas"></canvas>
 
-<!-- ALBUM MODAL -->
 <div class="modal-overlay" id="album-modal" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="document.getElementById('album-modal').classList.remove('open')">[ close ]</button>
@@ -499,7 +275,6 @@ nav.links a:hover { color: var(--accent2); }
 
   <hr class="rule heavy">
 
-  <!-- NOW -->
   <div class="section-label">now</div>
   <div class="now-block">
     <div class="now-row">
@@ -523,7 +298,7 @@ nav.links a:hover { color: var(--accent2); }
     </div>
     <div class="now-row">
       <span class="now-key">reading</span>
-      <span class="now-val dim">—</span>
+      <span class="now-val dim">Blood Meridian - Cormac McCarthy, That Hideous Strength - C.S. Lewis</span>
     </div>
     <div class="now-row">
       <span class="now-key">mn</span>
@@ -534,24 +309,21 @@ nav.links a:hover { color: var(--accent2); }
     </div>
   </div>
 
-  <!-- BIO -->
   <div class="section-label">about</div>
   <div class="bio-block">
-    <p>Financial professional, musician, developer, and writer</p>
+    <p>Financial professional, musician, developer, and writer.</p>
     <br>
-    <p>Finance college drop out working in finance</p>
+    <p>Finance college drop out working in finance.</p>
     <br>
-    <p>Music Production & Audio Engineering at Berklee College of Music. 20+ albums released, 2000+ songs written or produced. Clientele across 30+ countries. Listeners across 100+ countries.</p>
+    <p>Music Production &amp; Audio Engineering at Berklee College of Music. 20+ albums released, 2000+ songs written or produced. Clientele across 30+ countries. Listeners in 100+ countries.</p>
     <br>
     <p>Self-taught web dev that has built and shipped software tools across Python and JavaScript, with a focus on AI integration.</p>
     <br>
     <p>Author of <a href="https://marketnihilist.com" target="_blank">Market Nihilist</a>, a Substack publication covering macroeconomics, emerging technology, and financial infrastructure for investors who know markets changed and most market thinking didn't.</p>
-  
   </div>
 
   <hr class="rule">
 
-  <!-- TICKERS -->
   <div class="section-label">market</div>
   <div class="tickers-row" id="tickers-row">
     <div class="ticker-card" id="tick-BTC"><div class="ticker-symbol">BTC</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
@@ -561,9 +333,8 @@ nav.links a:hover { color: var(--accent2); }
     <div class="ticker-card" id="tick-GOOGL"><div class="ticker-symbol">GOOGL</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
     <div class="ticker-card" id="tick-MRVL"><div class="ticker-symbol">MRVL</div><div class="ticker-price">—</div><div class="ticker-change flat">—</div></div>
   </div>
-  <div class="tickers-note">delayed data via yahoo finance. not financial advice.</div>
+  <div class="tickers-note">delayed data. not financial advice.</div>
 
-  <!-- TRANSMISSION -->
   <div class="section-label">transmission</div>
   <div class="posts-section" id="posts-container">
     <div class="posts-loading">loading transmissions...</div>
@@ -571,7 +342,6 @@ nav.links a:hover { color: var(--accent2); }
 
   <hr class="rule">
 
-  <!-- THESIS -->
   <div class="section-label">frameworks</div>
   <div class="thesis-section">
     <div class="thesis-item">
@@ -598,7 +368,6 @@ nav.links a:hover { color: var(--accent2); }
 
   <hr class="rule">
 
-  <!-- CATALOG -->
   <div class="section-label collapsible" id="catalog-toggle" onclick="toggleCatalog()">
     the catalog <span class="section-toggle">▾</span>
   </div>
@@ -622,7 +391,6 @@ nav.links a:hover { color: var(--accent2); }
 <script>
 feather.replace();
 
-// ─── CATALOG COLLAPSE ────────────────────────────────────
 function toggleCatalog() {
   const body = document.getElementById('catalog-body');
   const label = document.getElementById('catalog-toggle');
@@ -639,14 +407,11 @@ function toggleCatalog() {
     });
   }
 }
-
-// set initial max-height after grid renders
 window.addEventListener('load', () => {
   const body = document.getElementById('catalog-body');
   body.style.maxHeight = body.scrollHeight + 'px';
 });
 
-// ─── MODAL ───────────────────────────────────────────────
 function closeModal(e) {
   if (e.target === document.getElementById('album-modal'))
     document.getElementById('album-modal').classList.remove('open');
@@ -680,108 +445,53 @@ function openAlbum(a) {
   document.getElementById('album-modal').classList.add('open');
 }
 
-// ─── SIGIL ───────────────────────────────────────────────
 const canvas = document.getElementById('sigil-canvas');
 const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  drawSigil();
-}
-
-function seededRandom(seed) {
-  let s = seed;
-  return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
-}
-
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; drawSigil(); }
+function seededRandom(seed) { let s = seed; return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
 function drawSigil() {
   const W = canvas.width, H = canvas.height;
   const cx = W / 2, cy = H * 0.38;
   const seed = Math.floor(Date.now() / 86400000);
   const rand = seededRandom(seed);
   ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = '#C4622D';
-  ctx.fillStyle = '#C4622D';
-
-  // concentric rings
-  [240, 200, 160, 80, 40].forEach((r, i) => {
-    ctx.lineWidth = i === 0 ? 1 : 0.5;
-    ctx.globalAlpha = i === 0 ? 1 : 0.5;
-    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
-  });
+  ctx.strokeStyle = '#C4622D'; ctx.fillStyle = '#C4622D';
+  [240, 200, 160, 80, 40].forEach((r, i) => { ctx.lineWidth = i === 0 ? 1 : 0.5; ctx.globalAlpha = i === 0 ? 1 : 0.5; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke(); });
   ctx.globalAlpha = 1;
-
-  // 8-point compass
   const cardinalAngles = Array.from({length: 8}, (_, i) => (i / 8) * Math.PI * 2 - Math.PI / 2);
   cardinalAngles.forEach((a, i) => {
     const isCardinal = i % 2 === 0;
-    ctx.lineWidth = isCardinal ? 0.8 : 0.5;
-    ctx.globalAlpha = isCardinal ? 1 : 0.6;
-    ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * 40, cy + Math.sin(a) * 40);
-    ctx.lineTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240);
-    ctx.stroke();
+    ctx.lineWidth = isCardinal ? 0.8 : 0.5; ctx.globalAlpha = isCardinal ? 1 : 0.6;
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * 40, cy + Math.sin(a) * 40); ctx.lineTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240); ctx.stroke();
     if (isCardinal) {
-      const tip   = { x: cx + Math.cos(a) * 252, y: cy + Math.sin(a) * 252 };
-      const left  = { x: cx + Math.cos(a + 0.14) * 232, y: cy + Math.sin(a + 0.14) * 232 };
+      const tip = { x: cx + Math.cos(a) * 252, y: cy + Math.sin(a) * 252 };
+      const left = { x: cx + Math.cos(a + 0.14) * 232, y: cy + Math.sin(a + 0.14) * 232 };
       const right = { x: cx + Math.cos(a - 0.14) * 232, y: cy + Math.sin(a - 0.14) * 232 };
-      ctx.beginPath();
-      ctx.moveTo(tip.x, tip.y); ctx.lineTo(left.x, left.y); ctx.lineTo(right.x, right.y);
-      ctx.closePath(); ctx.globalAlpha = 0.6; ctx.fill();
+      ctx.beginPath(); ctx.moveTo(tip.x, tip.y); ctx.lineTo(left.x, left.y); ctx.lineTo(right.x, right.y); ctx.closePath(); ctx.globalAlpha = 0.6; ctx.fill();
     }
   });
   ctx.globalAlpha = 1;
-
-  // degree ticks
   ctx.lineWidth = 0.5;
   for (let deg = 0; deg < 360; deg += 10) {
-    const a = (deg / 360) * Math.PI * 2 - Math.PI / 2;
-    const isThirty = deg % 30 === 0;
+    const a = (deg / 360) * Math.PI * 2 - Math.PI / 2; const isThirty = deg % 30 === 0;
     ctx.globalAlpha = isThirty ? 0.8 : 0.4;
-    ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240);
-    ctx.lineTo(cx + Math.cos(a) * (isThirty ? 225 : 233), cy + Math.sin(a) * (isThirty ? 225 : 233));
-    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240); ctx.lineTo(cx + Math.cos(a) * (isThirty ? 225 : 233), cy + Math.sin(a) * (isThirty ? 225 : 233)); ctx.stroke();
   }
   ctx.globalAlpha = 1;
-
-  // seeded constellation — even point count only, no pentagrams
   const nPts = 6 + Math.floor(rand() * 3) * 2;
-  const starAngles = Array.from({length: nPts}, (_, i) =>
-    (i / nPts) * Math.PI * 2 + rand() * (Math.PI / nPts) * 0.5
-  );
+  const starAngles = Array.from({length: nPts}, (_, i) => (i / nPts) * Math.PI * 2 + rand() * (Math.PI / nPts) * 0.5);
   const starR = 115 + rand() * 35;
   ctx.lineWidth = 0.4; ctx.globalAlpha = 0.5;
-  for (let i = 0; i < starAngles.length; i++) {
-    const j = (i + 2) % starAngles.length;
-    ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(starAngles[i]) * starR, cy + Math.sin(starAngles[i]) * starR);
-    ctx.lineTo(cx + Math.cos(starAngles[j]) * starR, cy + Math.sin(starAngles[j]) * starR);
-    ctx.stroke();
-  }
-  starAngles.forEach(a => {
-    ctx.beginPath();
-    ctx.arc(cx + Math.cos(a) * starR, cy + Math.sin(a) * starR, 1.5, 0, Math.PI * 2);
-    ctx.globalAlpha = 0.7; ctx.fill();
-  });
+  for (let i = 0; i < starAngles.length; i++) { const j = (i + 2) % starAngles.length; ctx.beginPath(); ctx.moveTo(cx + Math.cos(starAngles[i]) * starR, cy + Math.sin(starAngles[i]) * starR); ctx.lineTo(cx + Math.cos(starAngles[j]) * starR, cy + Math.sin(starAngles[j]) * starR); ctx.stroke(); }
+  starAngles.forEach(a => { ctx.beginPath(); ctx.arc(cx + Math.cos(a) * starR, cy + Math.sin(a) * starR, 1.5, 0, Math.PI * 2); ctx.globalAlpha = 0.7; ctx.fill(); });
   ctx.globalAlpha = 1;
-
-  // center
   ctx.lineWidth = 0.8;
-  [-14, 14].forEach(d => {
-    ctx.beginPath();
-    ctx.moveTo(cx + d * 0.5, cy); ctx.lineTo(cx + d, cy);
-    ctx.moveTo(cx, cy + d * 0.5); ctx.lineTo(cx, cy + d);
-    ctx.stroke();
-  });
+  [-14, 14].forEach(d => { ctx.beginPath(); ctx.moveTo(cx + d * 0.5, cy); ctx.lineTo(cx + d, cy); ctx.moveTo(cx, cy + d * 0.5); ctx.lineTo(cx, cy + d); ctx.stroke(); });
   ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI * 2); ctx.stroke();
 }
-
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// ─── MN RSS + POST COUNT ─────────────────────────────────
 async function fetchMNLatest() {
   try {
     const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://marketnihilist.substack.com/feed&api_key=&count=50');
@@ -789,10 +499,7 @@ async function fetchMNLatest() {
     if (data.items && data.items.length > 0) {
       const latest = data.items[0];
       const row = document.getElementById('mn-latest-row');
-      if (row) {
-        row.querySelector('a').href = latest.link;
-        row.querySelector('a').textContent = latest.title + ' ↗';
-      }
+      if (row) { row.querySelector('a').href = latest.link; row.querySelector('a').textContent = latest.title + ' ↗'; }
       const countEl = document.getElementById('mn-post-count');
       if (countEl) countEl.textContent = `${data.items.length} pieces`;
     }
@@ -801,70 +508,70 @@ async function fetchMNLatest() {
 fetchMNLatest();
 
 // ─── TICKERS ─────────────────────────────────────────────
-async function fetchTickers() {
-  const symbols = ['BTC-USD', 'INTC', 'SMH', 'IONQ', 'GOOGL', 'MRVL'];
-  const displayIds = ['BTC', 'INTC', 'SMH', 'IONQ', 'GOOGL', 'MRVL'];
+// BTC via coinbase (no auth needed)
+// Stocks via finnhub — get free key at finnhub.io, paste below
+const FINNHUB_KEY = 'YOUR_FINNHUB_KEY';
 
-  for (let i = 0; i < symbols.length; i++) {
-    try {
-      const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${symbols[i]}?interval=1d&range=2d`;
-      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}`;
-      const res = await fetch(proxyUrl);
-      const outer = await res.json();
-      const data = JSON.parse(outer.contents);
-      const meta = data.chart.result[0].meta;
-      const price = meta.regularMarketPrice;
-      const prev = meta.chartPreviousClose || meta.previousClose;
-      const change = ((price - prev) / prev) * 100;
-      const card = document.getElementById(`tick-${displayIds[i]}`);
-      if (card) {
-        card.querySelector('.ticker-price').textContent =
-          symbols[i] === 'BTC-USD'
-            ? '$' + price.toLocaleString('en-US', {maximumFractionDigits: 0})
-            : '$' + price.toFixed(2);
+async function fetchBTC() {
+  try {
+    const res = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
+    const data = await res.json();
+    const price = parseFloat(data.data.amount);
+    const card = document.getElementById('tick-BTC');
+    if (card) {
+      card.querySelector('.ticker-price').textContent = '$' + price.toLocaleString('en-US', {maximumFractionDigits: 0});
+      const res2 = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/historic?period=day');
+      const hist = await res2.json();
+      const prices = hist.data.prices;
+      if (prices && prices.length > 1) {
+        const oldest = parseFloat(prices[prices.length - 1].price);
+        const change = ((price - oldest) / oldest) * 100;
         const changeEl = card.querySelector('.ticker-change');
         changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
         changeEl.className = 'ticker-change ' + (change > 0.05 ? 'up' : change < -0.05 ? 'down' : 'flat');
       }
-    } catch(e) {}
-  }
+    }
+  } catch(e) {}
+}
+
+async function fetchStock(symbol, displayId) {
+  try {
+    const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_KEY}`);
+    const data = await res.json();
+    const price = data.c; const prev = data.pc;
+    const change = ((price - prev) / prev) * 100;
+    const card = document.getElementById(`tick-${displayId}`);
+    if (card && price) {
+      card.querySelector('.ticker-price').textContent = '$' + price.toFixed(2);
+      const changeEl = card.querySelector('.ticker-change');
+      changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%';
+      changeEl.className = 'ticker-change ' + (change > 0.05 ? 'up' : change < -0.05 ? 'down' : 'flat');
+    }
+  } catch(e) {}
+}
+
+function fetchTickers() {
+  fetchBTC();
+  [['INTC','INTC'],['SMH','SMH'],['IONQ','IONQ'],['GOOGL','GOOGL'],['MRVL','MRVL']].forEach(([s,id]) => fetchStock(s,id));
 }
 fetchTickers();
 
-// ─── MARKDOWN POSTS ──────────────────────────────────────
 async function loadPosts() {
   const container = document.getElementById('posts-container');
   try {
     const indexRes = await fetch('/posts/index.json');
     if (!indexRes.ok) throw new Error('no index');
     const posts = await indexRes.json();
-    if (!posts.length) {
-      container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>';
-      return;
-    }
+    if (!posts.length) { container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>'; return; }
     container.innerHTML = '';
     posts.forEach(post => {
       const item = document.createElement('div');
       item.className = 'post-item';
-      item.innerHTML = `
-        <div class="post-title-row" onclick="togglePost(this)">
-          <span class="post-title">${post.title} <span class="post-chevron">›</span></span>
-          <span class="post-meta">${post.date}</span>
-        </div>
-        <div class="post-body" data-src="/posts/${post.file}">
-          <div class="posts-loading">loading...</div>
-        </div>`;
+      item.innerHTML = `<div class="post-title-row" onclick="togglePost(this)"><span class="post-title">${post.title} <span class="post-chevron">›</span></span><span class="post-meta">${post.date}</span></div><div class="post-body" data-src="/posts/${post.file}"><div class="posts-loading">loading...</div></div>`;
       container.appendChild(item);
     });
   } catch(e) {
-    container.innerHTML = `
-      <div class="post-item">
-        <div class="post-title-row" onclick="togglePost(this)">
-          <span class="post-title">first transmission <span class="post-chevron">›</span></span>
-          <span class="post-meta">4/20/26</span>
-        </div>
-        <div class="post-body"><p>add posts to /posts/ to begin.</p></div>
-      </div>`;
+    container.innerHTML = `<div class="post-item"><div class="post-title-row" onclick="togglePost(this)"><span class="post-title">first transmission <span class="post-chevron">›</span></span><span class="post-meta">4/20/26</span></div><div class="post-body"><p>add posts to /posts/ to begin.</p></div></div>`;
   }
 }
 
@@ -879,43 +586,33 @@ async function togglePost(row) {
       const md = await res.text();
       body.innerHTML = renderMarkdown(md);
       body.dataset.loaded = '1';
-    } catch(e) {
-      body.innerHTML = '<p style="color:var(--muted)">could not load post.</p>';
-    }
+    } catch(e) { body.innerHTML = '<p style="color:var(--muted)">could not load post.</p>'; }
   }
 }
 
 function renderMarkdown(md) {
   return md
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>').replace(/^## (.+)$/gm, '<h2>$1</h2>').replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">').replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
     .replace(/^---$/gm, '<hr style="border-color:var(--rule);margin:0.75rem 0">')
-    .split('\n\n')
-    .map(p => p.trim() && !p.startsWith('<') ? `<p>${p.replace(/\n/g, '<br>')}</p>` : p)
-    .join('\n');
+    .split('\n\n').map(p => p.trim() && !p.startsWith('<') ? `<p>${p.replace(/\n/g, '<br>')}</p>` : p).join('\n');
 }
-
 loadPosts();
 
-// ─── CATALOG ─────────────────────────────────────────────
 const albums = [
-  { title: 'Exit 33',        artist: 'SLUMP',         year: '2016', art: 'resources/album-art/exit33.jpg',          stream: null, download: null, desc: '' },
-  { title: 'summersover',    artist: 'SLUMP',         year: '2017', art: 'resources/album-art/summersover.jpg',     stream: null, download: null, desc: '' },
-  { title: '93ultra',        artist: 'Raymond Felix', year: '2017', art: 'resources/album-art/93ultra.jpg',         stream: null, download: null, desc: '' },
-  { title: 'SPEED DEMON',    artist: 'Raymond Felix', year: '2018', art: 'resources/album-art/SPEED DEMON.jpg',     stream: null, download: null, desc: '' },
-  { title: 'TBTFL',          artist: 'Raymond Felix', year: '2019', art: 'resources/album-art/TBTFL.jpg',           stream: null, download: null, desc: '' },
-  { title: 'Speed Hype I',   artist: 'Speed Hype',    year: '2019', art: 'resources/album-art/SH1.jpeg',            stream: null, download: null, desc: '' },
-  { title: 'Speed Hype II',  artist: 'Speed Hype',    year: '2020', art: 'resources/album-art/SH2.jpeg',            stream: null, download: null, desc: '' },
-  { title: 'Speed Hype III', artist: 'Speed Hype',    year: '2020', art: 'resources/album-art/SH3.jpeg',            stream: null, download: null, desc: '' },
-  { title: 'Pay Attention',  artist: 'Speed Hype',    year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg',  stream: null, download: null, desc: '' },
-  { title: 'LYEATD',         artist: 'tenawai',       year: '2021', art: 'resources/album-art/LYEATD.jpeg',         stream: null, download: null, desc: '' },
-  { title: 'ART IS A SIN',   artist: 'Raymond Felix', year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg',   stream: null, download: null, desc: '' },
-  { title: 'I Am The Ship',  artist: 'Raymond Felix', year: '2023', art: 'resources/album-art/I Am The Ship.png',   stream: null, download: null, desc: '' },
+  { title: 'Exit 33',        artist: 'SLUMP',         year: '2016', art: 'resources/album-art/exit33.jpg',         stream: null, download: null, desc: '' },
+  { title: 'summersover',    artist: 'SLUMP',         year: '2017', art: 'resources/album-art/summersover.jpg',    stream: null, download: null, desc: '' },
+  { title: '93ultra',        artist: 'Raymond Felix', year: '2017', art: 'resources/album-art/93ultra.jpg',        stream: null, download: null, desc: '' },
+  { title: 'SPEED DEMON',    artist: 'Raymond Felix', year: '2018', art: 'resources/album-art/SPEED DEMON.jpg',    stream: null, download: null, desc: '' },
+  { title: 'TBTFL',          artist: 'Raymond Felix', year: '2019', art: 'resources/album-art/TBTFL.jpg',          stream: null, download: null, desc: '' },
+  { title: 'Speed Hype I',   artist: 'Speed Hype',    year: '2019', art: 'resources/album-art/SH1.jpeg',           stream: null, download: null, desc: '' },
+  { title: 'Speed Hype II',  artist: 'Speed Hype',    year: '2020', art: 'resources/album-art/SH2.jpeg',           stream: null, download: null, desc: '' },
+  { title: 'Speed Hype III', artist: 'Speed Hype',    year: '2020', art: 'resources/album-art/SH3.jpeg',           stream: null, download: null, desc: '' },
+  { title: 'Pay Attention',  artist: 'Speed Hype',    year: '2021', art: 'resources/album-art/PAY ATTENTION.jpeg', stream: null, download: null, desc: '' },
+  { title: 'LYEATD',         artist: 'tenawai',       year: '2021', art: 'resources/album-art/LYEATD.jpeg',        stream: null, download: null, desc: '' },
+  { title: 'ART IS A SIN',   artist: 'Raymond Felix', year: '2022', art: 'resources/album-art/ART IS A SIN.jpeg',  stream: null, download: null, desc: '' },
+  { title: 'I Am The Ship',  artist: 'Raymond Felix', year: '2023', art: 'resources/album-art/I Am The Ship.png',  stream: null, download: null, desc: '' },
 ];
 
 const grid = document.getElementById('catalog-grid');
@@ -923,16 +620,7 @@ albums.forEach(a => {
   const card = document.createElement('div');
   card.className = 'album-card';
   card.onclick = () => openAlbum(a);
-  card.innerHTML = `
-    <div class="album-art">
-      ${a.art
-        ? `<img src="${a.art}" alt="${a.title}">`
-        : `<div class="album-art-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>`}
-    </div>
-    <div class="album-info">
-      <div class="album-title">${a.title}</div>
-      <div class="album-year">${a.year}</div>
-    </div>`;
+  card.innerHTML = `<div class="album-art">${a.art ? `<img src="${a.art}" alt="${a.title}">` : `<div class="album-art-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>`}</div><div class="album-info"><div class="album-title">${a.title}</div><div class="album-year">${a.year}</div></div>`;
   grid.appendChild(card);
 });
 </script>
