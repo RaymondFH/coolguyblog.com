@@ -194,3 +194,15 @@ audio {
 .embedded-doc h6 {
     padding-bottom: 0 !important;
 }
+
+.project-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  margin: 0.5rem 0;
+  transition: border-color 0.2s;
+}
+.project-thumb:hover { border-color: var(--accent); }
