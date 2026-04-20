@@ -221,10 +221,15 @@ nav.links a:hover { color: var(--accent2); }
 .modal-close { display: block; width: 100%; text-align: right; padding: 0.5rem 0.75rem 0; font-family: var(--mono); font-size: 0.65rem; color: var(--muted); cursor: pointer; background: none; border: none; letter-spacing: 0.1em; }
 .modal-close:hover { color: var(--ink); }
 
+
+  
 .site-footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.58rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--accent2); }
 
+.project-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--rule); cursor: pointer; margin: 0.5rem 0; transition: border-color 0.2s; }
+.project-thumb:hover { border-color: var(--accent); }
+  
 .page > * { animation: fadein 0.4s ease both; }
 .site-header     { animation-delay: 0s; }
 .now-block       { animation-delay: 0.06s; }
@@ -486,6 +491,16 @@ function openAlbum(a) {
   document.getElementById('album-modal').classList.add('open');
 }
 
+function openImg(src, title) {
+  document.getElementById('modal-art').innerHTML = `<img src="${src}" alt="${title || ''}">`;
+  document.getElementById('modal-title').textContent = title || '';
+  document.getElementById('modal-artist').textContent = '';
+  document.getElementById('modal-year').textContent = '';
+  document.getElementById('modal-desc').textContent = '';
+  document.getElementById('modal-actions').innerHTML = '';
+  document.getElementById('album-modal').classList.add('open');
+}
+  
 const canvas = document.getElementById('sigil-canvas');
 const ctx = canvas.getContext('2d');
 function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; drawSigil(); }
