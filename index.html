@@ -227,7 +227,7 @@ nav.links a:hover { color: var(--accent2); }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--accent2); }
 
-.project-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--rule); cursor: pointer; margin: 0.5rem 0; transition: border-color 0.2s; }
+.project-thumb { width: 120px; height: 120px; object-fit: cover; display: block; border: 1px solid var(--rule); cursor: pointer; margin: 0.5rem 0; transition: border-color 0.2s; }
 .project-thumb:hover { border-color: var(--accent); }
   
 .page > * { animation: fadein 0.4s ease both; }
@@ -467,6 +467,9 @@ document.addEventListener('keydown', e => {
 });
 
 function openAlbum(a) {
+  const modalArt = document.getElementById('modal-art');
+modalArt.style.aspectRatio = '1';
+modalArt.style.height = '';
   document.getElementById('modal-art').innerHTML = a.art
     ? `<img src="${a.art}" alt="${a.title}">`
     : `<svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="0.8" style="width:60px;height:60px;opacity:0.3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`;
@@ -492,7 +495,10 @@ function openAlbum(a) {
 }
 
 function openImg(src, title) {
-  document.getElementById('modal-art').innerHTML = `<img src="${src}" alt="${title || ''}">`;
+  const modalArt = document.getElementById('modal-art');
+  modalArt.style.aspectRatio = 'unset';
+  modalArt.style.height = 'auto';
+  modalArt.innerHTML = `<img src="${src}" alt="${title || ''}" style="width:100%;height:auto;object-fit:contain;">`;
   document.getElementById('modal-title').textContent = title || '';
   document.getElementById('modal-artist').textContent = '';
   document.getElementById('modal-year').textContent = '';
