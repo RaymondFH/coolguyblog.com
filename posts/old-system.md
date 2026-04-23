@@ -1,8 +1,11 @@
 # The Old System Broke
+4/20/26
+
+![dawn](/posts/images/dawn.png)
 
 Google changed something. All images in the old google doc hosting system I was using stopped loading.
 
-The tides changes. The vibe shifted.
+The tides changed. The vibe shifted.
 
 What a coincidence.
 
