@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>transmission — coolguy</title>
+<link rel="icon" type="image/x-icon" href="/resources/coolguy.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+:root {
+  --bg:     #16120E;
+  --bg2:    #1E1915;
+  --bg3:    #0E0B08;
+  --ink:    #EDE8E0;
+  --ink2:   #C4BDB4;
+  --muted:  #7A6F65;
+  --accent: #C4622D;
+  --accent2:#E8896A;
+  --blue:   #6B9EC4;
+  --rule:   #2E2820;
+  --mono:   'DM Mono', monospace;
+  --serif:  'DM Serif Display', serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--mono); background: var(--bg); color: var(--ink); font-size: 0.9rem; line-height: 1.6; overflow-x: hidden; }
+::selection { background: rgba(196,98,45,0.3); }
+
+#sigil-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.12; pointer-events: none; z-index: 0; }
+
+.page { position: relative; z-index: 1; max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem 6rem; }
+
+.site-header { margin-bottom: 1.75rem; }
+.site-title a { font-family: var(--serif); font-size: 2.4rem; font-weight: 400; color: var(--ink); text-decoration: none; font-style: italic; }
+.site-title a:hover { color: var(--accent2); }
+.site-desc { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 0.1rem; }
+.site-desc h3 { color: var(--muted); font-size: 0.68rem; font-weight: 400; font-family: var(--mono); letter-spacing: 0.05em; margin: 0; text-transform: uppercase; }
+.social-icons { display: flex; align-items: center; gap: 10px; }
+.social-icons a { color: var(--muted); transition: color 0.15s; }
+.social-icons a:hover { color: var(--accent2); }
+.social-icons svg { width: 13px; height: 13px; vertical-align: middle; }
+nav.links { margin-top: 0.5rem; }
+nav.links a { color: var(--blue); text-decoration: none; font-size: 0.78rem; margin-right: 1rem; font-family: var(--mono); transition: color 0.15s; }
+nav.links a:hover { color: var(--accent2); }
+
+.rule { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
+.rule.heavy { border-top: 1px solid var(--muted); margin: 1.5rem 0; opacity: 0.4; }
+
+.section-label { font-family: var(--mono); font-size: 0.58rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.posts-loading { color: var(--muted); font-size: 0.75rem; font-style: italic; padding: 0.5rem 0; }
+
+.post-item { border-bottom: 1px solid var(--rule); padding: 1.25rem 0; }
+.post-item:last-child { border-bottom: none; }
+.post-title-link { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); font-style: italic; text-decoration: none; display: block; margin-bottom: 0.2rem; transition: color 0.15s; }
+.post-title-link:hover { color: var(--accent2); }
+.post-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); margin-bottom: 0.6rem; }
+.post-preview-img { max-width: 200px; height: 150px; object-fit: cover; display: block; margin: 0.6rem 0; border: 1px solid var(--rule); text-decoration: none; transition: border-color 0.15s; }
+.post-preview-img:hover { border-color: var(--accent); }
+.post-preview-text { font-family: var(--mono); font-size: 0.82rem; color: var(--ink2); line-height: 1.75; margin-bottom: 0.6rem; }
+.post-read-more { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); text-decoration: none; letter-spacing: 0.05em; transition: color 0.15s; }
+.post-read-more:hover { color: var(--accent2); }
+
+.site-footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.58rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent2); }
+
+.page > * { animation: fadein 0.35s ease both; }
+@keyframes fadein { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+<canvas id="sigil-canvas"></canvas>
+
+<div class="page">
+
+  <header class="site-header">
+    <h1 class="site-title"><a href="/">coolguy</a></h1>
+    <div class="site-desc">
+      <h3>Producer of Products in Multiple Mediums</h3>
+      <div class="social-icons">
+        <a href="https://github.com/RaymondFH/" title="Github"><i data-feather="github"></i></a>
+        <a href="https://x.com/marketnihilist" title="Twitter"><i data-feather="twitter"></i></a>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="https://twitter.com/messages/compose?recipient_id=1765133288866263041" target="_blank">message me</a>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a>
+      <a href="/archive">archive</a>
+      <a href="/flappyCool/flappy.html">gamers</a>
+    </nav>
+  </header>
+
+  <hr class="rule heavy">
+
+  <div class="section-label">transmission</div>
+  <div id="posts-container">
+    <div class="posts-loading">loading transmissions...</div>
+  </div>
+
+  <footer class="site-footer">
+    <span>raymond felix II</span>
+    <span>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a> ·
+      <a href="/archive">archive</a> ·
+      <a href="https://github.com/RaymondFH/">github</a>
+    </span>
+  </footer>
+
+</div>
+
+<script>
+feather.replace();
+
+// SIGIL
+const canvas = document.getElementById('sigil-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; drawSigil(); }
+function seededRandom(seed) { let s = seed; return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
+function drawSigil() {
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H * 0.38;
+  const seed = Math.floor(Date.now() / 86400000);
+  const rand = seededRandom(seed);
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#C4622D'; ctx.fillStyle = '#C4622D';
+  [240, 200, 160, 80, 40].forEach((r, i) => { ctx.lineWidth = i === 0 ? 1 : 0.5; ctx.globalAlpha = i === 0 ? 1 : 0.5; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke(); });
+  ctx.globalAlpha = 1;
+  const cardinalAngles = Array.from({length: 8}, (_, i) => (i / 8) * Math.PI * 2 - Math.PI / 2);
+  cardinalAngles.forEach((a, i) => {
+    const isCardinal = i % 2 === 0;
+    ctx.lineWidth = isCardinal ? 0.8 : 0.5; ctx.globalAlpha = isCardinal ? 1 : 0.6;
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * 40, cy + Math.sin(a) * 40); ctx.lineTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240); ctx.stroke();
+    if (isCardinal) {
+      const tip = { x: cx + Math.cos(a) * 252, y: cy + Math.sin(a) * 252 };
+      const left = { x: cx + Math.cos(a + 0.14) * 232, y: cy + Math.sin(a + 0.14) * 232 };
+      const right = { x: cx + Math.cos(a - 0.14) * 232, y: cy + Math.sin(a - 0.14) * 232 };
+      ctx.beginPath(); ctx.moveTo(tip.x, tip.y); ctx.lineTo(left.x, left.y); ctx.lineTo(right.x, right.y); ctx.closePath(); ctx.globalAlpha = 0.6; ctx.fill();
+    }
+  });
+  ctx.globalAlpha = 1;
+  ctx.lineWidth = 0.5;
+  for (let deg = 0; deg < 360; deg += 10) {
+    const a = (deg / 360) * Math.PI * 2 - Math.PI / 2; const isThirty = deg % 30 === 0;
+    ctx.globalAlpha = isThirty ? 0.8 : 0.4;
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240); ctx.lineTo(cx + Math.cos(a) * (isThirty ? 225 : 233), cy + Math.sin(a) * (isThirty ? 225 : 233)); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  const nPts = 6 + Math.floor(rand() * 3) * 2;
+  const starAngles = Array.from({length: nPts}, (_, i) => (i / nPts) * Math.PI * 2 + rand() * (Math.PI / nPts) * 0.5);
+  const starR = 115 + rand() * 35;
+  ctx.lineWidth = 0.4; ctx.globalAlpha = 0.5;
+  for (let i = 0; i < starAngles.length; i++) { const j = (i + 2) % starAngles.length; ctx.beginPath(); ctx.moveTo(cx + Math.cos(starAngles[i]) * starR, cy + Math.sin(starAngles[i]) * starR); ctx.lineTo(cx + Math.cos(starAngles[j]) * starR, cy + Math.sin(starAngles[j]) * starR); ctx.stroke(); }
+  starAngles.forEach(a => { ctx.beginPath(); ctx.arc(cx + Math.cos(a) * starR, cy + Math.sin(a) * starR, 1.5, 0, Math.PI * 2); ctx.globalAlpha = 0.7; ctx.fill(); });
+  ctx.globalAlpha = 1;
+  ctx.lineWidth = 0.8;
+  [-14, 14].forEach(d => { ctx.beginPath(); ctx.moveTo(cx + d * 0.5, cy); ctx.lineTo(cx + d, cy); ctx.moveTo(cx, cy + d * 0.5); ctx.lineTo(cx, cy + d); ctx.stroke(); });
+  ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI * 2); ctx.stroke();
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// POSTS
+function extractPreview(md) {
+  const imgMatch = md.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+  const imgSrc = imgMatch ? imgMatch[2] : null;
+  const stripped = md
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+    .replace(/^#{1,6}\s+.+$/gm, '')
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\*(.+?)\*/g, '$1')
+    .replace(/^---$/gm, '');
+  const paragraphs = stripped.split(/\n\n+/).map(p => p.trim()).filter(p => p.length > 30);
+  return { imgSrc, firstPara: paragraphs[0] || '' };
+}
+
+async function loadPosts() {
+  const container = document.getElementById('posts-container');
+  try {
+    const indexRes = await fetch('/posts/index.json');
+    if (!indexRes.ok) throw new Error('no index');
+    const posts = await indexRes.json();
+    if (!posts.length) { container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>'; return; }
+    container.innerHTML = '';
+
+    for (const post of posts) {
+      const item = document.createElement('div');
+      item.className = 'post-item';
+      const postUrl = `/posts/post.html?post=${post.file}`;
+
+      try {
+        const res = await fetch(`/posts/${post.file}`);
+        const md = await res.text();
+        const { imgSrc, firstPara } = extractPreview(md);
+
+        item.innerHTML = `
+          <a class="post-title-link" href="${postUrl}">${post.title}</a>
+          <div class="post-meta">${post.date}</div>
+          ${imgSrc ? `<a href="${postUrl}"><img class="post-preview-img" src="${imgSrc}" alt="${post.title}"></a>` : ''}
+          <div class="post-preview-text">${firstPara}</div>
+          <a class="post-read-more" href="${postUrl}">read full post →</a>`;
+      } catch(e) {
+        item.innerHTML = `
+          <a class="post-title-link" href="${postUrl}">${post.title}</a>
+          <div class="post-meta">${post.date}</div>`;
+      }
+
+      container.appendChild(item);
+    }
+  } catch(e) {
+    container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>';
+  }
+}
+loadPosts();
+</script>
+</body>
+</html>
