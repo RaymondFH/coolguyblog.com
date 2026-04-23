@@ -1,5 +1,9 @@
 # The Protocol Layer
 
+4/21/26
+
+! (posts/images/protocol.png)
+
 Every functioning human group runs on a layer of shared, mostly-unspoken expectations: how to greet, how to eat, how to mark an occasion, how to acknowledge a favor, how to apologize, how to show up. These are not decorations on top of the real work of human life. They are the real work — compressed, automated, cached — so that the real work does not have to be renegotiated from scratch every time two people interact.
 
 Call this the protocol layer.
