@@ -28,104 +28,37 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  font-family: var(--mono);
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+body { font-family: var(--mono); background: var(--bg); color: var(--ink); font-size: 0.9rem; line-height: 1.6; overflow-x: hidden; }
 ::selection { background: rgba(196,98,45,0.3); }
 
-#sigil-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 0;
-}
+#sigil-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.18; pointer-events: none; z-index: 0; }
 
-.page {
-  position: relative;
-  z-index: 1;
-  max-width: 42rem;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 6rem;
-}
+.page { position: relative; z-index: 1; max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem 6rem; }
 
 .site-header { margin-bottom: 1.75rem; }
-.site-title a {
-  font-family: var(--serif);
-  font-size: 2.4rem;
-  font-weight: 400;
-  color: var(--ink);
-  text-decoration: none;
-  font-style: italic;
-}
+.site-title a { font-family: var(--serif); font-size: 2.4rem; font-weight: 400; color: var(--ink); text-decoration: none; font-style: italic; }
 .site-title a:hover { color: var(--accent2); }
-.site-desc {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 0.1rem;
-}
-.site-desc h3 {
-  color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 400;
-  font-family: var(--mono);
-  letter-spacing: 0.05em;
-  margin: 0;
-  text-transform: uppercase;
-}
+.site-desc { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 0.1rem; }
+.site-desc h3 { color: var(--muted); font-size: 0.68rem; font-weight: 400; font-family: var(--mono); letter-spacing: 0.05em; margin: 0; text-transform: uppercase; }
 .social-icons { display: flex; align-items: center; gap: 10px; }
 .social-icons a { color: var(--muted); transition: color 0.15s; }
 .social-icons a:hover { color: var(--accent2); }
 .social-icons svg { width: 13px; height: 13px; vertical-align: middle; }
 nav.links { margin-top: 0.5rem; }
-nav.links a {
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 0.78rem;
-  margin-right: 1rem;
-  font-family: var(--mono);
-  transition: color 0.15s;
-}
+nav.links a { color: var(--blue); text-decoration: none; font-size: 0.78rem; margin-right: 1rem; font-family: var(--mono); transition: color 0.15s; }
 nav.links a:hover { color: var(--accent2); }
 
 .rule { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
 .rule.heavy { border-top: 1px solid var(--muted); margin: 1.5rem 0; opacity: 0.4; }
 
-.section-label {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  color: var(--accent);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.65rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: default;
-}
+.section-label { font-family: var(--mono); font-size: 0.58rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem; cursor: default; }
 .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
 .section-label.collapsible { cursor: pointer; user-select: none; }
 .section-label.collapsible:hover { color: var(--accent2); }
 .section-toggle { font-size: 0.55rem; color: var(--muted); transition: transform 0.2s; display: inline-block; margin-left: 0.25rem; }
 .section-label.collapsed .section-toggle { transform: rotate(-90deg); }
 
-.now-block {
-  background: var(--bg3);
-  color: var(--ink2);
-  padding: 0.9rem 1rem;
-  margin-bottom: 1.75rem;
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
-  font-family: var(--mono);
-  font-size: 0.76rem;
-}
+.now-block { background: var(--bg3); color: var(--ink2); padding: 0.9rem 1rem; margin-bottom: 1.75rem; border: 1px solid var(--rule); border-left: 3px solid var(--accent); font-family: var(--mono); font-size: 0.76rem; }
 .now-row { display: flex; align-items: baseline; gap: 0.65rem; padding: 0.22rem 0; border-bottom: 1px solid #1A1510; }
 .now-row:last-child { border-bottom: none; }
 .now-key { color: var(--accent); min-width: 78px; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; opacity: 0.85; }
@@ -139,15 +72,7 @@ nav.links a:hover { color: var(--accent2); }
 .audio-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .audio-row audio { height: 22px; width: 140px; }
 
-.bio-block {
-  font-family: var(--mono);
-  font-size: 0.83rem;
-  color: var(--ink2);
-  margin-bottom: 1.75rem;
-  line-height: 1.8;
-  border-left: 2px solid var(--rule);
-  padding-left: 1rem;
-}
+.bio-block { font-family: var(--mono); font-size: 0.83rem; color: var(--ink2); margin-bottom: 1.75rem; line-height: 1.8; border-left: 2px solid var(--rule); padding-left: 1rem; }
 .bio-block strong { color: var(--ink); font-weight: 500; }
 .bio-block a { color: var(--blue); text-decoration: none; }
 .bio-block a:hover { color: var(--accent2); }
@@ -170,24 +95,18 @@ nav.links a:hover { color: var(--accent2); }
 .thesis-desc { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
 .thesis-tag { font-family: var(--mono); font-size: 0.52rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-right: 0.5rem; opacity: 0.7; }
 
+/* POSTS */
 .posts-section { margin-bottom: 1.75rem; }
 .posts-loading { color: var(--muted); font-size: 0.75rem; font-style: italic; padding: 0.5rem 0; }
-.post-item { border-bottom: 1px solid var(--rule); }
+.post-item { border-bottom: 1px solid var(--rule); padding: 0.75rem 0; }
 .post-item:last-child { border-bottom: none; }
-.post-title-row { display: flex; justify-content: space-between; align-items: baseline; cursor: pointer; user-select: none; padding: 0.5rem 0; gap: 0.5rem; }
-.post-title { font-family: var(--serif); font-size: 1rem; color: var(--ink); font-style: italic; transition: color 0.15s; display: flex; align-items: baseline; gap: 0.35rem; flex: 1; }
-.post-title-row:hover .post-title { color: var(--accent2); }
-.post-chevron { font-family: var(--mono); color: var(--muted); font-size: 0.68rem; transition: transform 0.2s; display: inline-block; flex-shrink: 0; }
-.post-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
-.post-body { display: none; padding: 0.4rem 0 0.9rem 1rem; color: var(--ink2); font-family: var(--mono); font-size: 0.83rem; line-height: 1.8; border-left: 2px solid var(--rule); margin-bottom: 0.4rem; }
-.post-body img { max-width: 100%; height: auto; margin: 0.75rem 0; display: block; }
-.post-body p { margin-bottom: 0.6rem; }
-.post-body h1,.post-body h2,.post-body h3 { font-family: var(--serif); color: var(--ink); font-style: italic; margin: 1rem 0 0.4rem; }
-.post-body a { color: var(--blue); }
-.post-body strong { color: var(--ink); font-weight: 500; }
-.post-item.open .post-body { display: block; }
-.post-item.open .post-chevron { transform: rotate(90deg); }
-.post-item.open .post-title { color: var(--accent2); }
+.post-title-link { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); font-style: italic; text-decoration: none; display: block; margin-bottom: 0.2rem; transition: color 0.15s; }
+.post-title-link:hover { color: var(--accent2); }
+.post-meta { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); margin-bottom: 0.5rem; }
+.post-preview-img { max-width: 100%; height: auto; display: block; margin: 0.5rem 0; border: 1px solid var(--rule); }
+.post-preview-text { font-family: var(--mono); font-size: 0.82rem; color: var(--ink2); line-height: 1.75; margin-bottom: 0.5rem; }
+.post-read-more { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); text-decoration: none; letter-spacing: 0.05em; transition: color 0.15s; }
+.post-read-more:hover { color: var(--accent2); }
 
 .catalog-section { margin-bottom: 1.75rem; }
 .catalog-body { overflow: hidden; transition: max-height 0.35s ease; }
@@ -221,22 +140,20 @@ nav.links a:hover { color: var(--accent2); }
 .modal-close { display: block; width: 100%; text-align: right; padding: 0.5rem 0.75rem 0; font-family: var(--mono); font-size: 0.65rem; color: var(--muted); cursor: pointer; background: none; border: none; letter-spacing: 0.1em; }
 .modal-close:hover { color: var(--ink); }
 
+.project-thumb { width: 120px; height: 120px; object-fit: cover; display: block; border: 1px solid var(--rule); cursor: pointer; margin: 0.5rem 0; transition: border-color 0.2s; }
+.project-thumb:hover { border-color: var(--accent); }
 
-  
 .site-footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.58rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--accent2); }
 
-.project-thumb { width: 120px; height: 120px; object-fit: cover; display: block; border: 1px solid var(--rule); cursor: pointer; margin: 0.5rem 0; transition: border-color 0.2s; }
-.project-thumb:hover { border-color: var(--accent); }
-  
 .page > * { animation: fadein 0.4s ease both; }
-.site-header     { animation-delay: 0s; }
-.now-block       { animation-delay: 0.06s; }
-.bio-block       { animation-delay: 0.1s; }
-.tickers-row     { animation-delay: 0.13s; }
-.thesis-section  { animation-delay: 0.16s; }
-.posts-section   { animation-delay: 0.19s; }
+.site-header { animation-delay: 0s; }
+.now-block { animation-delay: 0.06s; }
+.bio-block { animation-delay: 0.1s; }
+.tickers-row { animation-delay: 0.13s; }
+.thesis-section { animation-delay: 0.16s; }
+.posts-section { animation-delay: 0.19s; }
 .catalog-section { animation-delay: 0.22s; }
 @keyframes fadein { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } }
 </style>
@@ -291,9 +208,7 @@ nav.links a:hover { color: var(--accent2); }
       <span class="now-val">
         <div class="audio-row">
           <span style="color:var(--muted)">fonk (94bpm).wav — 2023</span>
-          <audio controls>
-            <source src="resources/fonk (94bpm).wav" type="audio/mpeg">
-          </audio>
+          <audio controls><source src="resources/fonk (94bpm).wav" type="audio/mpeg"></audio>
         </div>
       </span>
     </div>
@@ -373,41 +288,35 @@ nav.links a:hover { color: var(--accent2); }
 
   <hr class="rule">
 
-
-<div class="section-label">projects</div>
-<div class="thesis-section">
-
-  <div class="thesis-item">
-    <span class="thesis-tag">JavaScript · AI · Music</span>
-    <a class="thesis-title" href="https://github.com/RaymondFH/betterMidi" target="_blank">betterMidi ↗</a>
-<img class="project-thumb" src="/archive/images/image99.png" onclick="openImg(this.src, 'betterMidi')">
-    <div class="thesis-desc">A web-based MIDI editor and enhancer. Upload a MIDI file, visualize it on a piano roll, edit notes, and use AI to extend melodies, add harmonies, or enhance the composition. Built because the music production background and the coding obsession finally had a reason to be in the same room. Powered by Magenta.js.</div>
+  <div class="section-label">projects</div>
+  <div class="thesis-section">
+    <div class="thesis-item">
+      <span class="thesis-tag">JavaScript · AI · Music</span>
+      <a class="thesis-title" href="https://github.com/RaymondFH/betterMidi" target="_blank">betterMidi ↗</a>
+      <img class="project-thumb" src="/archive/images/image99.png" onclick="openImg(this.src, 'betterMidi')">
+      <div class="thesis-desc">A web-based MIDI editor and enhancer. Upload a MIDI file, visualize it on a piano roll, edit notes, and use AI to extend melodies, add harmonies, or enhance the composition. Built because the music production background and the coding obsession finally had a reason to be in the same room. Powered by Magenta.js.</div>
+    </div>
+    <div class="thesis-item">
+      <span class="thesis-tag">Python · Claude API · Web</span>
+      <a class="thesis-title" href="https://github.com/RaymondFH/ProverbsAI" target="_blank">ProverbsAI ↗</a>
+      <img class="project-thumb" src="/archive/images/image32.jpg" onclick="openImg(this.src, 'ProverbsAI')">
+      <div class="thesis-desc">An AI app that takes your problem and searches the Bible and Catholic teachings to recommend scripture as a starting point. Doesn't alter or interpret text — just finds the relevant passages and links to multiple translations. Inspired by TempleOS. Originally shipped as ihaveaproblem.xyz, rebranded to ProverbsAI.com.</div>
+    </div>
+    <div class="thesis-item">
+      <span class="thesis-tag">Python · Discord API</span>
+      <a class="thesis-title" href="https://github.com/RaymondFH/fee-dar" target="_blank">fee-dar ↗</a>
+      <img class="project-thumb" src="/archive/images/image13.png" onclick="openImg(this.src, 'fee-dar')">
+      <div class="thesis-desc">A Discord bot that monitors a server for members currently "feeding" in League of Legends or Valorant and calls them out in real time. Novelty software with a real use case. Built for the group chat.</div>
+    </div>
+    <div class="thesis-item">
+      <span class="thesis-tag">JavaScript · Anthropic API</span>
+      <a class="thesis-title" href="https://github.com/RaymondFH/ai-todo-list" target="_blank">ai-todo-list ↗</a>
+      <div class="thesis-desc">A todo list that uses AI to automatically categorize tasks as you add them. Simple premise, clean implementation. One of the first things built directly on the Anthropic API.</div>
+    </div>
   </div>
 
-  <div class="thesis-item">
-    <span class="thesis-tag">Python · Claude API · Web</span>
-    <a class="thesis-title" href="https://github.com/RaymondFH/ProverbsAI" target="_blank">ProverbsAI ↗</a>
-<img class="project-thumb" src="/archive/images/image32.jpg" onclick="openImg(this.src, 'ProverbsAI')">
-    <div class="thesis-desc">An AI app that takes your problem and searches the Bible and Catholic teachings to recommend scripture as a starting point. Doesn't alter or interpret text — just finds the relevant passages and links to multiple translations. Inspired by TempleOS. Originally shipped as ihaveaproblem.xyz, rebranded to ProverbsAI.com.</div>
-  </div>
+  <hr class="rule">
 
-  <div class="thesis-item">
-    <span class="thesis-tag">Python · Discord API</span>
-    <a class="thesis-title" href="https://github.com/RaymondFH/fee-dar" target="_blank">fee-dar ↗</a>
-<img class="project-thumb" src="/archive/images/image13.png" onclick="openImg(this.src, 'fee-dar')">    
-    <div class="thesis-desc">A Discord bot that monitors a server for members currently "feeding" in League of Legends or Valorant and calls them out in real time. Novelty software with a real use case. Built for the group chat.</div>
-  </div>
-
-  <div class="thesis-item">
-    <span class="thesis-tag">JavaScript · Anthropic API</span>
-    <a class="thesis-title" href="https://github.com/RaymondFH/ai-todo-list" target="_blank">ai-todo-list ↗</a>
-    <div class="thesis-desc">A todo list that uses AI to automatically categorize tasks as you add them. Simple premise, clean implementation. One of the first things built directly on the Anthropic API.</div>
-  </div>
-
-</div>
-
-<hr class="rule">
-  
   <div class="section-label collapsible" id="catalog-toggle" onclick="toggleCatalog()">
     the catalog <span class="section-toggle">▾</span>
   </div>
@@ -416,12 +325,6 @@ nav.links a:hover { color: var(--accent2); }
       <div class="catalog-grid" id="catalog-grid"></div>
     </div>
   </div>
-
-  <div class="modal-overlay" id="img-modal" onclick="this.classList.remove('open')">
-  <div style="max-width:90vw;max-height:90vh;display:flex;align-items:center;justify-content:center;">
-    <img id="img-modal-src" src="" style="max-width:90vw;max-height:90vh;object-fit:contain;border:1px solid var(--rule);">
-  </div>
-</div>
 
   <footer class="site-footer">
     <span>raymond felix II</span>
@@ -468,9 +371,9 @@ document.addEventListener('keydown', e => {
 
 function openAlbum(a) {
   const modalArt = document.getElementById('modal-art');
-modalArt.style.aspectRatio = '1';
-modalArt.style.height = '';
-  document.getElementById('modal-art').innerHTML = a.art
+  modalArt.style.aspectRatio = '1';
+  modalArt.style.height = '';
+  modalArt.innerHTML = a.art
     ? `<img src="${a.art}" alt="${a.title}">`
     : `<svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="0.8" style="width:60px;height:60px;opacity:0.3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`;
   document.getElementById('modal-title').textContent = a.title;
@@ -506,7 +409,8 @@ function openImg(src, title) {
   document.getElementById('modal-actions').innerHTML = '';
   document.getElementById('album-modal').classList.add('open');
 }
-  
+
+// SIGIL
 const canvas = document.getElementById('sigil-canvas');
 const ctx = canvas.getContext('2d');
 function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; drawSigil(); }
@@ -554,6 +458,7 @@ function drawSigil() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
+// MN RSS
 async function fetchMNLatest() {
   try {
     const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://marketnihilist.substack.com/feed&api_key=&count=50');
@@ -569,9 +474,7 @@ async function fetchMNLatest() {
 }
 fetchMNLatest();
 
-// ─── TICKERS ─────────────────────────────────────────────
-// BTC via coinbase (no auth needed)
-// Stocks via finnhub — get free key at finnhub.io, paste below
+// TICKERS
 const FINNHUB_KEY = 'd7ij4mpr01qn2qau8begd7ij4mpr01qn2qau8bf0';
 
 async function fetchBTC() {
@@ -618,6 +521,38 @@ function fetchTickers() {
 }
 fetchTickers();
 
+// POSTS — preview mode with image + one paragraph + read more link
+function renderMarkdown(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>').replace(/^## (.+)$/gm, '<h2>$1</h2>').replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/^---$/gm, '<hr style="border-color:var(--rule);margin:0.75rem 0">')
+    .split('\n\n').map(p => p.trim() && !p.startsWith('<') ? `<p>${p.replace(/\n/g, '<br>')}</p>` : p).join('\n');
+}
+
+function extractPreview(md) {
+  // find first image
+  const imgMatch = md.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+  const imgHtml = imgMatch ? `<img class="post-preview-img" src="${imgMatch[2]}" alt="${imgMatch[1]}">` : '';
+
+  // strip markdown syntax to get plain text paragraphs
+  const stripped = md
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '') // remove images
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1') // links to text
+    .replace(/^#{1,6}\s+.+$/gm, '')            // remove headings
+    .replace(/\*\*(.+?)\*\*/g, '$1')           // bold to text
+    .replace(/\*(.+?)\*/g, '$1')               // italic to text
+    .replace(/^---$/gm, '');                   // remove hrs
+
+  // get first non-empty paragraph
+  const paragraphs = stripped.split(/\n\n+/).map(p => p.trim()).filter(p => p.length > 30);
+  const firstPara = paragraphs[0] || '';
+
+  return { imgHtml, firstPara };
+}
+
 async function loadPosts() {
   const container = document.getElementById('posts-container');
   try {
@@ -626,42 +561,40 @@ async function loadPosts() {
     const posts = await indexRes.json();
     if (!posts.length) { container.innerHTML = '<div class="posts-loading">no transmissions yet.</div>'; return; }
     container.innerHTML = '';
-    posts.forEach(post => {
+
+    for (const post of posts) {
       const item = document.createElement('div');
       item.className = 'post-item';
-      item.innerHTML = `<div class="post-title-row" onclick="togglePost(this)"><span class="post-title">${post.title} <span class="post-chevron">›</span></span><span class="post-meta">${post.date}</span></div><div class="post-body" data-src="/posts/${post.file}"><div class="posts-loading">loading...</div></div>`;
+
+      // try to fetch and preview the post content
+      try {
+        const res = await fetch(`/posts/${post.file}`);
+        const md = await res.text();
+        const { imgHtml, firstPara } = extractPreview(md);
+        const postUrl = `/posts/post.html?post=${post.file}`;
+
+        item.innerHTML = `
+          <a class="post-title-link" href="${postUrl}">${post.title}</a>
+          <div class="post-meta">${post.date}</div>
+          ${imgHtml}
+          <div class="post-preview-text">${firstPara}</div>
+          <a class="post-read-more" href="${postUrl}">read full post →</a>`;
+      } catch(e) {
+        // fallback if fetch fails
+        item.innerHTML = `
+          <a class="post-title-link" href="/posts/post.html?post=${post.file}">${post.title}</a>
+          <div class="post-meta">${post.date}</div>`;
+      }
+
       container.appendChild(item);
-    });
+    }
   } catch(e) {
-    container.innerHTML = `<div class="post-item"><div class="post-title-row" onclick="togglePost(this)"><span class="post-title">first transmission <span class="post-chevron">›</span></span><span class="post-meta">4/20/26</span></div><div class="post-body"><p>add posts to /posts/ to begin.</p></div></div>`;
+    container.innerHTML = `<div class="posts-loading">no transmissions yet. add posts to /posts/ to begin.</div>`;
   }
-}
-
-async function togglePost(row) {
-  const item = row.closest('.post-item');
-  const body = item.querySelector('.post-body');
-  const wasOpen = item.classList.contains('open');
-  item.classList.toggle('open');
-  if (!wasOpen && body.dataset.src && !body.dataset.loaded) {
-    try {
-      const res = await fetch(body.dataset.src);
-      const md = await res.text();
-      body.innerHTML = renderMarkdown(md);
-      body.dataset.loaded = '1';
-    } catch(e) { body.innerHTML = '<p style="color:var(--muted)">could not load post.</p>'; }
-  }
-}
-
-function renderMarkdown(md) {
-  return md
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>').replace(/^## (.+)$/gm, '<h2>$1</h2>').replace(/^# (.+)$/gm, '<h1>$1</h1>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">').replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-    .replace(/^---$/gm, '<hr style="border-color:var(--rule);margin:0.75rem 0">')
-    .split('\n\n').map(p => p.trim() && !p.startsWith('<') ? `<p>${p.replace(/\n/g, '<br>')}</p>` : p).join('\n');
 }
 loadPosts();
 
+// CATALOG
 const albums = [
   { title: 'Exit 33',        artist: 'SLUMP',         year: '2016', art: 'resources/album-art/exit33.jpg',         stream: null, download: null, desc: '' },
   { title: 'summersover',    artist: 'SLUMP',         year: '2017', art: 'resources/album-art/summersover.jpg',    stream: null, download: null, desc: '' },

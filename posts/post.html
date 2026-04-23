@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>coolguy</title>
+<link rel="icon" type="image/x-icon" href="/resources/coolguy.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+:root {
+  --bg:     #16120E;
+  --bg2:    #1E1915;
+  --bg3:    #0E0B08;
+  --ink:    #EDE8E0;
+  --ink2:   #C4BDB4;
+  --muted:  #7A6F65;
+  --accent: #C4622D;
+  --accent2:#E8896A;
+  --blue:   #6B9EC4;
+  --rule:   #2E2820;
+  --mono:   'DM Mono', monospace;
+  --serif:  'DM Serif Display', serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--mono); background: var(--bg); color: var(--ink); font-size: 0.9rem; line-height: 1.6; overflow-x: hidden; }
+::selection { background: rgba(196,98,45,0.3); }
+
+#sigil-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.12; pointer-events: none; z-index: 0; }
+
+.page { position: relative; z-index: 1; max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem 6rem; }
+
+.site-header { margin-bottom: 1.75rem; }
+.site-title a { font-family: var(--serif); font-size: 2.4rem; font-weight: 400; color: var(--ink); text-decoration: none; font-style: italic; }
+.site-title a:hover { color: var(--accent2); }
+.site-desc { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 0.1rem; }
+.site-desc h3 { color: var(--muted); font-size: 0.68rem; font-weight: 400; font-family: var(--mono); letter-spacing: 0.05em; margin: 0; text-transform: uppercase; }
+.social-icons { display: flex; align-items: center; gap: 10px; }
+.social-icons a { color: var(--muted); transition: color 0.15s; }
+.social-icons a:hover { color: var(--accent2); }
+.social-icons svg { width: 13px; height: 13px; vertical-align: middle; }
+nav.links { margin-top: 0.5rem; }
+nav.links a { color: var(--blue); text-decoration: none; font-size: 0.78rem; margin-right: 1rem; font-family: var(--mono); transition: color 0.15s; }
+nav.links a:hover { color: var(--accent2); }
+
+.rule { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
+.rule.heavy { border-top: 1px solid var(--muted); margin: 1.5rem 0; opacity: 0.4; }
+
+/* POST CONTENT */
+.post-header { margin-bottom: 1.5rem; }
+.post-header h1 { font-family: var(--serif); font-size: 1.8rem; font-style: italic; color: var(--ink); line-height: 1.3; margin-bottom: 0.4rem; }
+.post-date { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); margin-bottom: 0.5rem; }
+.post-back { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); text-decoration: none; display: inline-block; margin-bottom: 1.5rem; transition: color 0.15s; }
+.post-back:hover { color: var(--accent2); }
+
+.post-content { color: var(--ink2); font-family: var(--mono); font-size: 0.88rem; line-height: 1.85; }
+.post-content p { margin-bottom: 1rem; }
+.post-content h1 { font-family: var(--serif); font-size: 1.5rem; font-style: italic; color: var(--ink); margin: 2rem 0 0.75rem; }
+.post-content h2 { font-family: var(--serif); font-size: 1.25rem; font-style: italic; color: var(--ink); margin: 1.75rem 0 0.6rem; }
+.post-content h3 { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--ink); margin: 1.5rem 0 0.5rem; }
+.post-content img { max-width: 100%; height: auto; display: block; margin: 1.25rem 0; border: 1px solid var(--rule); }
+.post-content a { color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(107,158,196,0.3); }
+.post-content a:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+.post-content strong { color: var(--ink); font-weight: 500; }
+.post-content em { font-style: italic; }
+.post-content hr { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
+.post-content blockquote { border-left: 2px solid var(--accent); padding-left: 1rem; margin: 1rem 0; color: var(--muted); font-style: italic; }
+
+.post-loading { color: var(--muted); font-family: var(--mono); font-size: 0.8rem; font-style: italic; padding: 2rem 0; }
+
+.site-footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.58rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent2); }
+
+.page > * { animation: fadein 0.35s ease both; }
+@keyframes fadein { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+<canvas id="sigil-canvas"></canvas>
+
+<div class="page">
+
+  <header class="site-header">
+    <h1 class="site-title"><a href="/">coolguy</a></h1>
+    <div class="site-desc">
+      <h3>Producer of Products in Multiple Mediums</h3>
+      <div class="social-icons">
+        <a href="https://github.com/RaymondFH/" title="Github"><i data-feather="github"></i></a>
+        <a href="https://x.com/marketnihilist" title="Twitter"><i data-feather="twitter"></i></a>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="https://twitter.com/messages/compose?recipient_id=1765133288866263041" target="_blank">message me</a>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a>
+      <a href="/archive">archive</a>
+      <a href="/flappyCool/flappy.html">gamers</a>
+    </nav>
+  </header>
+
+  <hr class="rule heavy">
+
+  <a class="post-back" href="/">← back</a>
+
+  <div id="post-header" class="post-header">
+    <div class="post-loading">loading...</div>
+  </div>
+
+  <div id="post-content" class="post-content"></div>
+
+  <footer class="site-footer">
+    <span>raymond felix II</span>
+    <span>
+      <a href="https://marketnihilist.com" target="_blank">market nihilist</a> ·
+      <a href="/archive">archive</a> ·
+      <a href="https://github.com/RaymondFH/">github</a>
+    </span>
+  </footer>
+
+</div>
+
+<script>
+feather.replace();
+
+// SIGIL — same as homepage
+const canvas = document.getElementById('sigil-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; drawSigil(); }
+function seededRandom(seed) { let s = seed; return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
+function drawSigil() {
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H * 0.38;
+  const seed = Math.floor(Date.now() / 86400000);
+  const rand = seededRandom(seed);
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#C4622D'; ctx.fillStyle = '#C4622D';
+  [240, 200, 160, 80, 40].forEach((r, i) => { ctx.lineWidth = i === 0 ? 1 : 0.5; ctx.globalAlpha = i === 0 ? 1 : 0.5; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke(); });
+  ctx.globalAlpha = 1;
+  const cardinalAngles = Array.from({length: 8}, (_, i) => (i / 8) * Math.PI * 2 - Math.PI / 2);
+  cardinalAngles.forEach((a, i) => {
+    const isCardinal = i % 2 === 0;
+    ctx.lineWidth = isCardinal ? 0.8 : 0.5; ctx.globalAlpha = isCardinal ? 1 : 0.6;
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * 40, cy + Math.sin(a) * 40); ctx.lineTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240); ctx.stroke();
+    if (isCardinal) {
+      const tip = { x: cx + Math.cos(a) * 252, y: cy + Math.sin(a) * 252 };
+      const left = { x: cx + Math.cos(a + 0.14) * 232, y: cy + Math.sin(a + 0.14) * 232 };
+      const right = { x: cx + Math.cos(a - 0.14) * 232, y: cy + Math.sin(a - 0.14) * 232 };
+      ctx.beginPath(); ctx.moveTo(tip.x, tip.y); ctx.lineTo(left.x, left.y); ctx.lineTo(right.x, right.y); ctx.closePath(); ctx.globalAlpha = 0.6; ctx.fill();
+    }
+  });
+  ctx.globalAlpha = 1;
+  ctx.lineWidth = 0.5;
+  for (let deg = 0; deg < 360; deg += 10) {
+    const a = (deg / 360) * Math.PI * 2 - Math.PI / 2; const isThirty = deg % 30 === 0;
+    ctx.globalAlpha = isThirty ? 0.8 : 0.4;
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * 240, cy + Math.sin(a) * 240); ctx.lineTo(cx + Math.cos(a) * (isThirty ? 225 : 233), cy + Math.sin(a) * (isThirty ? 225 : 233)); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  const nPts = 6 + Math.floor(rand() * 3) * 2;
+  const starAngles = Array.from({length: nPts}, (_, i) => (i / nPts) * Math.PI * 2 + rand() * (Math.PI / nPts) * 0.5);
+  const starR = 115 + rand() * 35;
+  ctx.lineWidth = 0.4; ctx.globalAlpha = 0.5;
+  for (let i = 0; i < starAngles.length; i++) { const j = (i + 2) % starAngles.length; ctx.beginPath(); ctx.moveTo(cx + Math.cos(starAngles[i]) * starR, cy + Math.sin(starAngles[i]) * starR); ctx.lineTo(cx + Math.cos(starAngles[j]) * starR, cy + Math.sin(starAngles[j]) * starR); ctx.stroke(); }
+  starAngles.forEach(a => { ctx.beginPath(); ctx.arc(cx + Math.cos(a) * starR, cy + Math.sin(a) * starR, 1.5, 0, Math.PI * 2); ctx.globalAlpha = 0.7; ctx.fill(); });
+  ctx.globalAlpha = 1;
+  ctx.lineWidth = 0.8;
+  [-14, 14].forEach(d => { ctx.beginPath(); ctx.moveTo(cx + d * 0.5, cy); ctx.lineTo(cx + d, cy); ctx.moveTo(cx, cy + d * 0.5); ctx.lineTo(cx, cy + d); ctx.stroke(); });
+  ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI * 2); ctx.stroke();
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// LOAD POST
+function renderMarkdown(md) {
+  return md
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^---$/gm, '<hr>')
+    .split('\n\n')
+    .map(p => p.trim() && !p.startsWith('<') ? `<p>${p.replace(/\n/g, '<br>')}</p>` : p)
+    .join('\n');
+}
+
+async function loadPost() {
+  const params = new URLSearchParams(window.location.search);
+  const file = params.get('post');
+  const headerEl = document.getElementById('post-header');
+  const contentEl = document.getElementById('post-content');
+
+  if (!file) {
+    headerEl.innerHTML = '<div class="post-loading">no post specified.</div>';
+    return;
+  }
+
+  try {
+    // get title and date from index.json
+    const indexRes = await fetch('/posts/index.json');
+    const posts = await indexRes.json();
+    const meta = posts.find(p => p.file === file) || { title: file.replace('.md',''), date: '' };
+
+    // set page title
+    document.title = meta.title + ' — coolguy';
+
+    // load markdown
+    const res = await fetch(`/posts/${file}`);
+    if (!res.ok) throw new Error('not found');
+    const md = await res.text();
+
+    // strip h1 from content if it matches the title (avoid double title)
+    const cleanMd = md.replace(/^# .+\n?/m, '').trim();
+
+    headerEl.innerHTML = `
+      <h1>${meta.title}</h1>
+      <div class="post-date">${meta.date}</div>`;
+
+    contentEl.innerHTML = renderMarkdown(cleanMd);
+
+  } catch(e) {
+    headerEl.innerHTML = '<div class="post-loading">post not found.</div>';
+  }
+}
+
+loadPost();
+</script>
+</body>
+</html>
