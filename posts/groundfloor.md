@@ -1,5 +1,5 @@
 # Do you think love is different than hate?
-_**Because at 30, it's marginal, right?**_
+*Because at 30, it's marginal, right?*
 
 4/27/26
 
