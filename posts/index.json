@@ -1,12 +1,17 @@
 [
   {
-    "file": "old-system.md",
-    "title": "The Old System Broke",
-    "date": "4/20/26"
+    "file": "groundfloor.md",
+    "title": "Do you think love is different than hate?",
+    "date": "4/27/26"
   },
   {
     "file": "protocol-layer.md",
     "title": "The Protocol Layer",
     "date": "4/21/26"
+  },
+  {
+    "file": "old-system.md",
+    "title": "The Old System Broke",
+    "date": "4/20/26"
   }
 ]
