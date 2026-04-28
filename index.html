@@ -229,6 +229,14 @@ nav.links a:hover { color: var(--accent2); }
         <span id="mn-post-count" style="color:var(--muted);margin-left:0.75rem;font-size:0.65rem;"></span>
       </span>
     </div>
+    <div class="now-row" style="align-items:center;">
+      <span class="now-key">moon</span>
+      <span class="now-val" style="display:flex;align-items:center;gap:0.6rem;">
+        <canvas id="moon-canvas" width="28" height="28" style="flex-shrink:0;"></canvas>
+        <span id="moon-phase-name" style="color:var(--ink2);"></span>
+        <span id="moon-phase-detail" style="color:var(--muted);font-style:italic;font-size:0.65rem;"></span>
+      </span>
+    </div>
   </div>
 
   <div class="section-label">about</div>
@@ -620,6 +628,67 @@ albums.forEach(a => {
   card.innerHTML = `<div class="album-art">${a.art ? `<img src="${a.art}" alt="${a.title}">` : `<div class="album-art-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>`}</div><div class="album-info"><div class="album-title">${a.title}</div><div class="album-year">${a.year}</div></div>`;
   grid.appendChild(card);
 });
+
+// MOON PHASE
+function initMoon() {
+  function getMoonPhase(date) {
+    const known = new Date(2000, 0, 6, 18, 14);
+    const diff = (date - known) / (1000 * 60 * 60 * 24);
+    const cycle = 29.53058867;
+    return ((diff % cycle) + cycle) % cycle;
+  }
+  function getPhaseName(phase) {
+    if (phase < 1.85) return ['New Moon', ''];
+    if (phase < 7.38) return ['Waxing Crescent', ''];
+    if (phase < 9.22) return ['First Quarter', ''];
+    if (phase < 14.77) return ['Waxing Gibbous', ''];
+    if (phase < 16.61) return ['Full Moon', ''];
+    if (phase < 22.15) return ['Waning Gibbous', ''];
+    if (phase < 23.99) return ['Last Quarter', ''];
+    return ['Waning Crescent', ''];
+  }
+  function drawMoon(canvas, phase) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const cx = w/2, cy = h/2, r = w*0.44;
+    ctx.clearRect(0,0,w,h);
+    const illumination = (1 - Math.cos(2*Math.PI*phase/29.53))/2;
+    const waxing = phase < 14.77;
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.fillStyle = '#2A2420'; ctx.fill();
+    if (waxing) {
+      ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,Math.PI/2,false); ctx.closePath();
+      ctx.fillStyle='#EDE8E0'; ctx.fill();
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,Math.PI/2,false); ctx.closePath(); ctx.clip();
+      const ex = cx + r*Math.cos(Math.PI*illumination);
+      ctx.beginPath(); ctx.ellipse(ex,cy,r*Math.abs(Math.cos(Math.PI*illumination)),r,0,0,Math.PI*2);
+      ctx.fillStyle = illumination<0.5 ? '#EDE8E0' : '#2A2420'; ctx.fill();
+      ctx.restore();
+    } else {
+      ctx.beginPath(); ctx.arc(cx,cy,r,Math.PI/2,-Math.PI/2,false); ctx.closePath();
+      ctx.fillStyle='#EDE8E0'; ctx.fill();
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx,cy,r,Math.PI/2,-Math.PI/2,false); ctx.closePath(); ctx.clip();
+      const ex = cx - r*Math.cos(Math.PI*illumination);
+      ctx.beginPath(); ctx.ellipse(ex,cy,r*Math.abs(Math.cos(Math.PI*illumination)),r,0,0,Math.PI*2);
+      ctx.fillStyle = illumination<0.5 ? '#EDE8E0' : '#2A2420'; ctx.fill();
+      ctx.restore();
+    }
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle='#3E3830'; ctx.lineWidth=1; ctx.stroke();
+  }
+  const phase = getMoonPhase(new Date());
+  const [name] = getPhaseName(phase);
+  const illum = Math.round((1-Math.cos(2*Math.PI*phase/29.53))/2*100);
+  const nameEl = document.getElementById('moon-phase-name');
+  const detailEl = document.getElementById('moon-phase-detail');
+  const moonCanvas = document.getElementById('moon-canvas');
+  if (nameEl) nameEl.textContent = name;
+  if (detailEl) detailEl.textContent = illum + '% illuminated';
+  if (moonCanvas) drawMoon(moonCanvas, phase);
+}
+initMoon();
 </script>
 </body>
 </html>
