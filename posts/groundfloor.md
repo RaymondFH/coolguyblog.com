@@ -20,10 +20,14 @@ We must save the world so our kids can be bored in peace. The miraculous breeds 
 
 *So long, so long, so long*
 
+
 *You cannot survive*
+
 
 *And*  **I'm not dyin', and I can't lose**
 
+
 *I can't lose, no, I can't lose*
+
 
 *'Cause I can't leave it to you*
