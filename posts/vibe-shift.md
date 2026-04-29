@@ -1,7 +1,7 @@
 # The vibe just shifted  
+*Oh, behave*
+
 4/24/26  
-  
-*Oh, behave*  
   
 ![mojo](/posts/images/mojo.png)  
   
