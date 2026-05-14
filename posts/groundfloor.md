@@ -1,8 +1,6 @@
 # Do you think love is different than hate?
 *Because at 30, it's marginal, right?*
 
-4/27/26
-
 ![end](/posts/images/end.PNG)
 
 I think that what you think and what you know are at odds. But what do I know? I only think, I don't know.
