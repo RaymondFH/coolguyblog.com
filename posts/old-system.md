@@ -1,5 +1,4 @@
 # The Old System Broke
-4/20/26
 
 ![dawn](/posts/images/dawn.png)
 
