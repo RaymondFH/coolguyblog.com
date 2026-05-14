@@ -1,4 +1,5 @@
-# The Old System Broke
+# RIP CGB 1.0
+*2024-2026*
 
 ![dawn](/posts/images/dawn.png)
 
