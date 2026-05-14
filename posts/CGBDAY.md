@@ -1,6 +1,4 @@
 # TWO YEARS OF COOLGUYBLOG.COM
-5/14/26
-
 *You too must imagine what smarter goals do*
 
 ![CGBDAY.PNG](/posts/images/CGBDAY.PNG)
