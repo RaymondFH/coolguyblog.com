@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wavefront — AI Buildout Cycle Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E1420; --panel:#151D2E; --panel2:#111827; --rule:#26314A;
+  --ink:#D8E0EC; --muted:#7C8AA5; --faint:#4A5670;
+  --accel:#F2A93B; --steady:#8FA3B8; --decel:#58A6C9;
+  --warn:#D96A5B; --paper:#E8DCC8;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;padding-bottom:80px}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+
+/* Masthead */
+header{border-bottom:1px solid var(--rule);padding:28px 0 22px}
+.mast{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,52px);letter-spacing:.01em;line-height:1}
+h1 em{font-style:italic;color:var(--accel)}
+.mast-sub{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.reading-meta{text-align:right;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.reading-meta strong{color:var(--ink);font-weight:500}
+#saveStatus{font-size:11px;color:var(--faint);display:block;margin-top:4px}
+
+/* Wave strip — signature */
+.wavezone{padding:26px 0 6px;border-bottom:1px solid var(--rule)}
+.wave-svg{width:100%;height:150px;display:block}
+.layer-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:-4px}
+.strip-cell{border-top:3px solid var(--faint);padding:8px 4px 4px;cursor:pointer;transition:opacity .2s}
+.strip-cell:hover{opacity:.85}
+.strip-cell .lnum{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--faint)}
+.strip-cell .lname{font-size:12px;font-weight:500;color:var(--muted)}
+.strip-cell.st-accelerating{border-top-color:var(--accel)}
+.strip-cell.st-steady{border-top-color:var(--steady)}
+.strip-cell.st-decelerating{border-top-color:var(--decel)}
+.strip-cell.front .lname{color:var(--ink)}
+.strip-cell.front .lnum{color:var(--accel)}
+.wave-caption{font-family:var(--mono);font-size:11px;color:var(--muted);margin:10px 0 14px}
+.wave-caption b{color:var(--accel);font-weight:600}
+
+/* Readout bar */
+.readout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:18px 0;border-bottom:1px solid var(--rule)}
+.readout-box{background:var(--panel2);border:1px solid var(--rule);padding:12px 14px}
+.readout-box .rlabel{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.readout-box .rvalue{font-family:var(--mono);font-size:13px;font-weight:600}
+.capex-toggle{display:flex;gap:6px;margin-top:8px}
+.capex-toggle button{flex:1;font-family:var(--mono);font-size:11px;padding:5px 2px;background:transparent;border:1px solid var(--rule);color:var(--muted);cursor:pointer}
+.capex-toggle button.on{border-color:var(--accel);color:var(--accel)}
+#cycleCall.mid{color:var(--accel)} #cycleCall.blow{color:var(--warn)} #cycleCall.cool{color:var(--decel)}
+
+/* Layer cards */
+.layers-head{padding:26px 0 4px}
+.layers-head h2, .section-head h2{font-family:var(--serif);font-weight:400;font-size:26px}
+.section-note{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em}
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:14px 0 26px;border-bottom:1px solid var(--rule)}
+.card{background:var(--panel);border:1px solid var(--rule);padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px}
+.card .top{display:flex;justify-content:space-between;align-items:baseline}
+.card .lnum{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint)}
+.card h3{font-family:var(--serif);font-weight:400;font-size:21px;line-height:1.1}
+.card .desc{font-size:12.5px;color:var(--muted)}
+.statebtn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border:1px solid;background:transparent;cursor:pointer;align-self:flex-start}
+.statebtn.st-accelerating{color:var(--accel);border-color:var(--accel)}
+.statebtn.st-steady{color:var(--steady);border-color:var(--steady)}
+.statebtn.st-decelerating{color:var(--decel);border-color:var(--decel)}
+.inds{display:flex;flex-direction:column;gap:6px}
+.ind{display:flex;gap:8px;align-items:center}
+.ind label{font-family:var(--mono);font-size:10.5px;color:var(--muted);flex:1;line-height:1.3}
+.ind input{width:104px;background:var(--panel2);border:1px solid var(--rule);color:var(--ink);font-family:var(--mono);font-size:11.5px;padding:5px 7px}
+.ind input:focus{outline:1px solid var(--accel);border-color:var(--accel)}
+.card textarea{background:var(--panel2);border:1px solid var(--rule);color:var(--ink);font-family:var(--sans);font-size:12.5px;padding:7px 8px;min-height:52px;resize:vertical;width:100%}
+.card textarea:focus{outline:1px solid var(--accel);border-color:var(--accel)}
+.wf-set{font-family:var(--mono);font-size:10.5px;background:none;border:none;color:var(--faint);cursor:pointer;text-align:left;padding:0;text-decoration:underline dotted}
+.wf-set.active{color:var(--accel);text-decoration:none;cursor:default}
+
+/* Falsification */
+.falsify{margin:26px 0;border:1px solid var(--warn);background:rgba(217,106,91,.05);padding:18px}
+.falsify h2{font-family:var(--serif);font-weight:400;font-size:24px;color:var(--warn)}
+.falsify .fsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin:4px 0 14px;letter-spacing:.05em}
+.fcrit{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--rule)}
+.fcrit p{font-size:13.5px;flex:1}
+.fcrit select{background:var(--panel2);border:1px solid var(--rule);color:var(--ink);font-family:var(--mono);font-size:11px;padding:5px 7px}
+#failBanner{display:none;margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--warn);border-top:1px solid var(--warn);padding-top:10px}
+
+/* Log */
+.logzone{padding:6px 0 30px}
+.log-actions{display:flex;gap:10px;margin:12px 0 16px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:9px 16px;cursor:pointer;border:1px solid var(--accel);background:var(--accel);color:#131313;font-weight:600}
+.btn.ghost{background:transparent;color:var(--accel)}
+.logtable{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px}
+.logtable th{text-align:left;color:var(--faint);font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:10px;padding:6px 8px;border-bottom:1px solid var(--rule)}
+.logtable td{padding:8px;border-bottom:1px solid var(--rule);color:var(--muted);vertical-align:top}
+.logtable td:first-child{color:var(--ink)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;vertical-align:middle}
+.dot.accelerating{background:var(--accel)}.dot.steady{background:var(--steady)}.dot.decelerating{background:var(--decel)}
+.empty{color:var(--faint);font-family:var(--mono);font-size:12px;padding:14px 0}
+.dellog{background:none;border:none;color:var(--faint);cursor:pointer;font-family:var(--mono);font-size:11px;text-decoration:underline dotted}
+
+footer{border-top:1px solid var(--rule);padding:14px 0;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.05em}
+
+@media(max-width:900px){.layers{grid-template-columns:1fr 1fr}.readout{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .layers{grid-template-columns:1fr}
+  .layer-strip{grid-template-columns:repeat(3,1fr);row-gap:14px}
+  .reading-meta{text-align:left}
+  .wave-svg{height:110px}
+}
+@media(prefers-reduced-motion:reduce){#crest,#wavePath{transition:none!important}}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accel);outline-offset:1px}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="mast">
+    <div>
+      <h1>The <em>Wavefront</em></h1>
+      <div class="mast-sub">AI buildout · supply-chain cycle instrument · phase 1</div>
+    </div>
+    <div class="reading-meta">
+      <span>Current reading: <strong id="readingDate">—</strong></span>
+      <span id="saveStatus">loading…</span>
+    </div>
+  </div>
+</div></header>
+
+<section class="wavezone"><div class="wrap">
+  <svg class="wave-svg" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="0" y1="118" x2="1200" y2="118" stroke="#26314A" stroke-width="1"/>
+    <g id="ticks"></g>
+    <path id="wavePath" fill="none" stroke="#F2A93B" stroke-width="2.5" style="transition:d .6s ease"/>
+    <path id="waveFill" fill="rgba(242,169,59,.07)" stroke="none" style="transition:d .6s ease"/>
+    <circle id="crest" r="5" fill="#F2A93B" style="transition:cx .6s ease"/>
+  </svg>
+  <div class="layer-strip" id="strip"></div>
+  <p class="wave-caption">Crest position = where capital intensity is peaking. <b id="frontLabel">—</b>. Tap a layer above to move the wavefront; the temperature bar under each name is its state.</p>
+</div></section>
+
+<section class="readout"><div class="wrap" style="display:contents">
+  <div class="readout-box">
+    <div class="rlabel">Master signal · hyperscaler capex guidance</div>
+    <div class="capex-toggle" id="capexToggle">
+      <button data-v="rising">RISING</button>
+      <button data-v="flat">FLAT</button>
+      <button data-v="falling">FALLING</button>
+    </div>
+  </div>
+  <div class="readout-box">
+    <div class="rlabel">Disambiguator readout</div>
+    <div class="rvalue" id="cycleCall">—</div>
+    <div style="font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:6px" id="cycleWhy"></div>
+  </div>
+  <div class="readout-box">
+    <div class="rlabel">One-line readout</div>
+    <div class="rvalue" id="oneLine" style="font-weight:400;font-size:12px;line-height:1.5">—</div>
+  </div>
+</div></section>
+
+<div class="wrap layers-head">
+  <h2>The six layers</h2>
+  <span class="section-note">set state · fill weekly indicator readings · note what you saw</span>
+</div>
+<section class="layers wrap" id="cards"></section>
+
+<div class="wrap">
+  <section class="falsify">
+    <h2>Falsification panel</h2>
+    <div class="fsub">The instrument is designed to catch its own thesis failing. If either criterion trips, the model is wrong.</div>
+    <div class="fcrit">
+      <p><strong>F1 — Sequencing test.</strong> Layer-basket return ratios (2023–2026 backtest) show no rotation in supply-chain order — layers just wiggle together as one factor.</p>
+      <select id="f1"><option value="untested">UNTESTED</option><option value="passing">PASSING</option><option value="failing">FAILING</option></select>
+    </div>
+    <div class="fcrit">
+      <p><strong>F2 — Loop-closure test.</strong> Two full apparent rotations pass without Layer 6 (monetization) revenue materially closing the gap with cumulative buildout capex.</p>
+      <select id="f2"><option value="watching">WATCHING</option><option value="passing">PASSING</option><option value="failing">FAILING</option></select>
+    </div>
+    <div id="failBanner">⚠ A FALSIFICATION CRITERION IS FAILING. THE WAVE MODEL IS COMPROMISED — STOP TRADING THE CLOCK AND RE-DERIVE.</div>
+  </section>
+</div>
+
+<div class="wrap logzone">
+  <div class="section-head"><h2>Weekly log</h2>
+  <span class="section-note">snapshot the current reading each week — this is the dataset your Phase 2 backtest will run against</span></div>
+  <div class="log-actions">
+    <button class="btn" id="snapBtn">Save weekly snapshot</button>
+    <button class="btn ghost" id="exportBtn">Copy log as JSON</button>
+  </div>
+  <table class="logtable">
+    <thead><tr><th>Date</th><th>Wavefront</th><th>Layer states L1→L6</th><th>Capex</th><th>Call</th><th></th></tr></thead>
+    <tbody id="logBody"></tbody>
+  </table>
+  <div class="empty" id="logEmpty">No snapshots yet. Save your first weekly reading.</div>
+</div>
+
+<footer><div class="wrap">MARKET NIHILIST INSTRUMENTATION · READINGS ARE FRAMEWORK STATES, NOT TRADE SIGNALS · PHASE 1 — MANUAL BY DESIGN</div></footer>
+
+<script>
+const LAYERS=[
+ {id:'l1',num:'L1',name:'Power & Land',desc:'Utilities, nuclear, grid interconnects. Longest lead time — years.',inds:['Utility/DC interconnect queue trend','Nuclear & PPA announcements']},
+ {id:'l2',num:'L2',name:'Fab Equipment',desc:'ASML, LRCX, AMAT, KLA. Orders lead chip revenue 12–18 mo.',inds:['Book-to-bill','Backlog / guidance tone']},
+ {id:'l3',num:'L3',name:'Silicon',desc:'TSMC, NVDA, custom ASICs (MRVL/AVGO), inference silicon (CBRS).',inds:['TSMC monthly revenue YoY','Inference $/M tokens trend']},
+ {id:'l4',num:'L4',name:'Memory & Interconnect',desc:'HBM/DRAM, optics, networking. Your FOTO/photonics layer.',inds:['DRAM/NAND spot','HBM contract pricing','Optics order flow']},
+ {id:'l5',num:'L5',name:'Deployment',desc:'Neoclouds, racks, cooling, DC construction. Lags chips 2–4 qtrs.',inds:['GPU rental spot pricing','Neocloud credit / refi news']},
+ {id:'l6',num:'L6',name:'Monetization',desc:'Hyperscaler AI revenue, software, agents. Has to pay for all of it.',inds:['AI software run-rates','Hyperscaler AI segment rev','Token consumption growth']}
+];
+const STATES=['accelerating','steady','decelerating'];
+const KEY='wavefront-v1';
+
+// July 10, 2026 seed reading (from the conversation this instrument was born in)
+const SEED={
+ readingDate:'2026-07-10',
+ wavefront:3,
+ capex:'rising',
+ f1:'untested', f2:'watching',
+ layers:{
+  l1:{state:'accelerating',notes:'Power is the binding constraint; longest queue in the system.',inds:['','']},
+  l2:{state:'steady',notes:'Sold off hardest this week despite record results — market discounting the NEXT order book.',inds:['','']},
+  l3:{state:'accelerating',notes:'Capex still flowing; CBRS-OpenAI $20B deal = L6 demand reaching upstream.',inds:['','']},
+  l4:{state:'accelerating',notes:'CRESTING. Parabolic pricing now taxing downstream layers (Apple/MSFT price hikes). SK Hynix $28B listing = paper supply at peak heat.',inds:['','','']},
+  l5:{state:'decelerating',notes:'Structural attack: Meta entering rental vs CoreWeave/Nebius. Watch GPU spot + credit.',inds:['','']},
+  l6:{state:'steady',notes:'Pre-ignition. "Cost of compute sensitivity" entering the discourse = L6 clearing its throat.',inds:['','','']}
+ },
+ log:[]
+};
+
+let S=null, saveTimer=null;
+
+function el(id){return document.getElementById(id)}
+function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+async function load(){
+  try{const r=await window.storage.get(KEY); S=JSON.parse(r.value);}
+  catch(e){S=JSON.parse(JSON.stringify(SEED));}
+  if(!S||!S.layers)S=JSON.parse(JSON.stringify(SEED));
+  renderAll(); status('loaded');
+}
+function scheduleSave(){status('unsaved changes…');clearTimeout(saveTimer);saveTimer=setTimeout(save,900)}
+async function save(){
+  try{const r=await window.storage.set(KEY,JSON.stringify(S)); status(r?'saved '+new Date().toLocaleTimeString():'save failed — storage unavailable');}
+  catch(e){status('save failed — storage unavailable')}
+}
+function status(t){el('saveStatus').textContent=t}
+
+/* ---------- render ---------- */
+function renderAll(){renderStrip();renderWave();renderCards();renderReadout();renderFalsify();renderLog();
+ el('readingDate').textContent=S.readingDate||new Date().toISOString().slice(0,10)}
+
+function renderStrip(){
+  el('strip').innerHTML=LAYERS.map((L,i)=>{
+    const st=S.layers[L.id].state;
+    return `<div class="strip-cell st-${st} ${i===S.wavefront?'front':''}" data-i="${i}" role="button" tabindex="0" aria-label="Set wavefront to ${L.name}">
+      <div class="lnum">${L.num}${i===S.wavefront?' · CREST':''}</div><div class="lname">${L.name}</div></div>`;
+  }).join('');
+  document.querySelectorAll('.strip-cell').forEach(c=>{
+    const go=()=>{S.wavefront=+c.dataset.i;renderAll();scheduleSave()};
+    c.onclick=go; c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};
+  });
+  el('frontLabel').textContent='Wavefront: '+LAYERS[S.wavefront].num+' '+LAYERS[S.wavefront].name;
+}
+
+function renderWave(){
+  const W=1200,base=118,seg=W/6, cx=seg*S.wavefront+seg/2;
+  el('ticks').innerHTML=LAYERS.map((L,i)=>`<line x1="${seg*i+seg/2}" y1="112" x2="${seg*i+seg/2}" y2="124" stroke="#4A5670" stroke-width="1"/>`).join('');
+  // wave: gaussian-ish crest centered at cx
+  let d='M0 '+base, f='M0 '+base;
+  for(let x=0;x<=W;x+=12){
+    const y=base-92*Math.exp(-Math.pow((x-cx)/170,2));
+    d+=` L${x} ${y.toFixed(1)}`; f+=` L${x} ${y.toFixed(1)}`;
+  }
+  f+=` L${W} ${base} L0 ${base} Z`;
+  el('wavePath').setAttribute('d',d);
+  el('waveFill').setAttribute('d',f);
+  el('crest').setAttribute('cx',cx); el('crest').setAttribute('cy',base-92);
+}
+
+function renderCards(){
+  el('cards').innerHTML=LAYERS.map((L,i)=>{
+    const d=S.layers[L.id];
+    return `<div class="card">
+      <div class="top"><span class="lnum">${L.num}</span>
+        <button class="wf-set ${i===S.wavefront?'active':''}" data-i="${i}">${i===S.wavefront?'◉ wavefront here':'set wavefront here'}</button></div>
+      <h3>${L.name}</h3>
+      <div class="desc">${L.desc}</div>
+      <button class="statebtn st-${d.state}" data-id="${L.id}">${d.state}</button>
+      <div class="inds">${L.inds.map((n,j)=>`<div class="ind"><label>${n}</label><input data-id="${L.id}" data-j="${j}" value="${esc(d.inds[j]||'')}" placeholder="reading"></div>`).join('')}</div>
+      <textarea data-id="${L.id}" placeholder="what you saw this week">${esc(d.notes||'')}</textarea>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('.statebtn').forEach(b=>b.onclick=()=>{
+    const d=S.layers[b.dataset.id];
+    d.state=STATES[(STATES.indexOf(d.state)+1)%3];
+    renderAll();scheduleSave();
+  });
+  document.querySelectorAll('.ind input').forEach(inp=>inp.oninput=()=>{
+    S.layers[inp.dataset.id].inds[+inp.dataset.j]=inp.value;scheduleSave();
+  });
+  document.querySelectorAll('.card textarea').forEach(t=>t.oninput=()=>{
+    S.layers[t.dataset.id].notes=t.value;scheduleSave();
+  });
+  document.querySelectorAll('.wf-set').forEach(b=>b.onclick=()=>{S.wavefront=+b.dataset.i;renderAll();scheduleSave()});
+}
+
+function renderReadout(){
+  document.querySelectorAll('#capexToggle button').forEach(b=>{
+    b.classList.toggle('on',b.dataset.v===S.capex);
+    b.onclick=()=>{S.capex=b.dataset.v;renderReadout();scheduleSave()};
+  });
+  const deployHot=S.layers.l5.state==='accelerating';
+  const call=el('cycleCall'), why=el('cycleWhy');
+  call.className='rvalue';
+  if(S.capex==='rising'){call.textContent=deployHot?'MID-CYCLE ACCELERATION':'LATE MID-CYCLE';call.classList.add('mid');
+    why.textContent='Capex guides still rising → wave has fuel.'}
+  else if(deployHot){call.textContent='BLOW-OFF WARNING';call.classList.add('blow');
+    why.textContent='Deployment layer pumping while capex guides flatten = terminal-phase signature.'}
+  else{call.textContent='COOLING / WAVE FADING';call.classList.add('cool');
+    why.textContent='Capex not rising, deployment not hot → wave losing energy.'}
+  const abbr={accelerating:'▲',steady:'●',decelerating:'▼'};
+  el('oneLine').textContent='Wavefront at '+LAYERS[S.wavefront].num+' · states '+LAYERS.map(L=>L.num.slice(1)+abbr[S.layers[L.id].state]).join(' ')+' · capex '+S.capex.toUpperCase();
+}
+
+function renderFalsify(){
+  el('f1').value=S.f1; el('f2').value=S.f2;
+  el('f1').onchange=e=>{S.f1=e.target.value;renderFalsify();scheduleSave()};
+  el('f2').onchange=e=>{S.f2=e.target.value;renderFalsify();scheduleSave()};
+  el('failBanner').style.display=(S.f1==='failing'||S.f2==='failing')?'block':'none';
+}
+
+function renderLog(){
+  const rows=(S.log||[]).slice().reverse();
+  el('logEmpty').style.display=rows.length?'none':'block';
+  el('logBody').innerHTML=rows.map((r,ri)=>{
+    const idx=S.log.length-1-ri;
+    return `<tr><td>${r.date}</td><td>${r.front}</td>
+      <td>${r.states.map(s=>`<span class="dot ${s}" title="${s}"></span>`).join('')}</td>
+      <td>${r.capex}</td><td>${esc(r.call)}</td>
+      <td><button class="dellog" data-i="${idx}">del</button></td></tr>`;
+  }).join('');
+  document.querySelectorAll('.dellog').forEach(b=>b.onclick=()=>{S.log.splice(+b.dataset.i,1);renderLog();scheduleSave()});
+}
+
+el('snapBtn').onclick=()=>{
+  S.log=S.log||[];
+  S.log.push({date:new Date().toISOString().slice(0,10),front:LAYERS[S.wavefront].num,
+    states:LAYERS.map(L=>S.layers[L.id].state),capex:S.capex,call:el('cycleCall').textContent});
+  S.readingDate=new Date().toISOString().slice(0,10);
+  renderAll();save();
+};
+el('exportBtn').onclick=async()=>{
+  try{await navigator.clipboard.writeText(JSON.stringify(S.log||[],null,2));status('log copied to clipboard')}
+  catch(e){status('copy failed — select manually')}
+};
+
+load();
+</script>
+</body>
+</html>
