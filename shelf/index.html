@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Books and movies from the physical shelves of coolguyblog.com.">
+  <title>Shelf — coolguy</title>
+  <link rel="icon" href="/resources/CGB2.png">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shelf.css?v=20260907">
+  <script src="collection.js?v=20260907" defer></script>
+  <script src="shelf.js?v=20260907" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to shelf</a>
+  <div class="page">
+    <header class="site-header">
+      <div class="site-title"><a href="/">coolguyblog.com</a></div>
+      <p class="site-desc">Producer of Products in Multiple Mediums</p>
+      <nav class="links" aria-label="Site navigation">
+        <a href="/posts">Posts</a>
+        <a href="/shelf/" aria-current="page">Shelf</a>
+        <a href="https://marketnihilist.com" target="_blank" rel="noopener">Market Nihilist</a>
+        <a href="/archive">Archive</a>
+        <a href="/flappyCool/flappy.html">Gamers</a>
+      </nav>
+    </header>
+    <main id="main">
+      <div class="heading"><div><p class="eyebrow">the physical collection</p><h1>Shelf<span>.</span></h1></div><span class="shelf-mark" aria-hidden="true">CGB / 02</span></div>
+      <p class="intro">Books, movies, and the space they take up.</p>
+      <div class="controls" hidden>
+        <div class="search"><label class="sr-only" for="search">Search by title</label><input id="search" type="search" placeholder="Find a title…" autocomplete="off" aria-controls="shelf"><span aria-hidden="true">⌕</span></div>
+        <div class="filters" role="group" aria-label="Filter collection">
+          <button type="button" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-filter="book" aria-pressed="false">Books</button>
+          <button type="button" data-filter="movie" aria-pressed="false">Movies</button>
+        </div>
+      </div>
+      <div class="shelf-meta"><p id="count" role="status" aria-live="polite" aria-atomic="true"></p><p class="hint">Pick a spine<span class="mobile-hint"> · swipe to browse →</span></p></div>
+      <div id="shelf-scroll" class="shelf-scroll" tabindex="0" role="region" aria-label="Physical media shelf" aria-describedby="scroll-help">
+        <p id="scroll-help" class="sr-only">Scroll horizontally to see more spines. Tab to a title and press Enter to open its details.</p>
+        <div id="shelf" class="cabinet"></div>
+      </div>
+      <div id="empty" class="empty" hidden><p>No spines match that search.</p><button type="button" id="reset">Clear search &amp; show all</button></div>
+      <noscript><p class="empty">Enable JavaScript to browse and search the shelf.</p></noscript>
+      <p class="collection-note">The current physical collection: 103 titles and counting.</p>
+    </main>
+    <footer class="site-footer"><span>coolguy</span><span><a href="https://marketnihilist.com">market nihilist</a> · <a href="/archive">archive</a> · <a href="/shelf/">shelf</a> · <a href="https://github.com/RaymondFH/">github</a></span></footer>
+  </div>
+  <dialog id="detail" aria-labelledby="detail-title" aria-describedby="detail-note">
+    <div class="detail-inner">
+      <form method="dialog"><button class="close" aria-label="Close details" autofocus>[ close × ]</button></form>
+      <div class="detail-heading">
+        <div id="detail-cover" class="detail-cover" aria-live="polite"></div>
+        <div class="detail-heading-text">
+          <p id="detail-type" class="eyebrow"></p>
+          <h2 id="detail-title"></h2>
+          <p id="detail-creator"></p>
+          <p id="detail-year"></p>
+        </div>
+      </div>
+      <div class="detail-rule"></div>
+      <p id="detail-note"></p>
+      <p id="detail-match" class="detail-match" hidden></p>
+      <nav id="detail-links" class="detail-links" aria-label="Find this title elsewhere"></nav>
+      <p id="detail-source" class="detail-source"></p>
+      <p class="detail-foot">part of the physical collection</p>
+    </div>
+  </dialog>
+</body>
+</html>
